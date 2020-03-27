@@ -1,4 +1,5 @@
 # CAT : 인공지능 기반 강의 추천 시스템
 
-![paper 시안1](https://user-images.githubusercontent.com/62415781/77666118-e042c700-6fc3-11ea-96ee-05b62333d632.png)
+![CAT](https://user-images.githubusercontent.com/62415781/77728208-5cc6bb80-703f-11ea-97f0-bbdcadc2410a.png)
+
  Lecture Recommendation by a.i.
