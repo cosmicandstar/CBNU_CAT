@@ -120,8 +120,9 @@
                                         </div>
                                         <br>
                                         <div class="mykeywordDiv" display="inline">
-                                            <div class="mykword">조별과제</div>
-                                            <div class="mykword">매주 리포트</div>
+                                            {% for keyword in wish.keywords %}
+                                                <div class="mykword">{{ keyword.keyword }}</div>
+                                            {% endfor %}
                                         </div>
                                         <br>
                                         <div>
