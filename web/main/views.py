@@ -375,18 +375,30 @@ def classrec(request):
         if len(recommend_subjects) > 0:
             final_subjects = recommend_subjects
 
+        page_number = request.GET.get('page')
+
         # 키워드 더하기
+        i = 0
+        max_i = 5
+        if page_number is not None:
+            i = 5 * (int(page_number) - 1)
+            max_i = 5 * int(page_number)
+        index = 0
         for subject in final_subjects:
             try:
                 if subjects_id.count(subject.subj_id) > 0:
-                    keywords = get_list_or_404(SubjectKeywords.objects.exclude(value=0), subj_id=subject.subj_id)
-                    keyword_list = []
                     adding_subject = subject
-                    for keyword in keywords:
-                        keyword_data = SubjectKeyword.objects.get(keyword_id=keyword.keyword_id)
-                        keyword_list.append(keyword_data)
-                    adding_subject.keywords = keyword_list
+                    if i <= index < max_i:
+                        keywords = get_list_or_404(SubjectKeywords.objects.exclude(value=0), subj_id=subject.subj_id)
+                        keyword_list = []
+                        for keyword in keywords:
+                            keyword_data = SubjectKeyword.objects.get(keyword_id=keyword.keyword_id)
+                            keyword_list.append(keyword_data)
+                        adding_subject.keywords = keyword_list
                     real_subjects.append(adding_subject)
+                    index += 1
+                else:
+                    break
             except:
                 real_subjects.append(subject)
 
