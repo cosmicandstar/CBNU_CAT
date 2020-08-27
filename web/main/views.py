@@ -555,6 +555,7 @@ def delete_wish(request, id):
     except KeyError:
         return HttpResponseRedirect(reverse('index'))
 
+
 def subject(request, id):
     try:
         user = User.objects.get(userid=request.session['userid'])
@@ -563,6 +564,16 @@ def subject(request, id):
         user_subject = UserSubject(user_id=user.id, subj_id=id, good=good, rating=rating)
         user_subject.save()
         return HttpResponseRedirect(reverse('classrec'))
+    except KeyError:
+        return HttpResponseRedirect(reverse('index'))
+
+
+def delete_subject(request, id):
+    try:
+        user = User.objects.get(userid=request.session['userid'])
+        user_subject = UserSubject.objects.get(user_id=user.id, subj_id=id)
+        user_subject.delete()
+        return HttpResponseRedirect(reverse('myclass'))
     except KeyError:
         return HttpResponseRedirect(reverse('index'))
 

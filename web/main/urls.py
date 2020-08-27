@@ -19,4 +19,5 @@ urlpatterns = [
     path('myclass/-wish/<int:id>/', views.delete_wish, name='-wish'),
     path('classrec/subject/<int:id>/', views.subject, name='subject'),
     path('myclass/subject_/<int:id>/', views.subject_, name='subject_'),
+    path('myclass/-subject/<int:id>/', views.delete_subject, name='-subject'),
 ]
