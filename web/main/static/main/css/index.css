@@ -1,0 +1,29 @@
+body{margin: 0;}
+a{color:black; text-decoration: none;}
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+*{font-family: 'Noto Sans KR', sans-serif; font-size: 1.4rem}
+
+.base img{
+    margin: 5px 10px 0px;
+    margin-right: 40px;
+    height: 60px; width: 65px;
+}
+
+.container{
+    font-size: 1.5rem;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.header a{
+        border-radius: 40px;
+        background-color: #5007EF;
+        border: 1px solid #5007EF;
+        width: 150px;
+        padding:3px; margin: 10px auto;
+        color: #FFFFFF;
+        position: absolute;
+        top:62%; left:50%;
+        transform: translate(-50%, -50%);
+}
+

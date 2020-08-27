@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'main/img/example.jpg' %}">
+    <title>CBNU A+</title>
+
+    <link rel="stylesheet" href="{% static 'main/css/index.css' %}">
+</head>
+<body>
+    <div class="base">
+    <img src="{% static 'main/img/logo.png' %}">
+    </div>
+    <div class="container">
+        <div class="header">
+            <img src="{% static 'main/img/main.png' %}">
+            <a href="./login">START <img src="{% static 'main/img/st.png' %}" width="20px"></a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>데이터 입력</title>
+</head>
+<body>
+    <div>
+        <form action="" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+            <label for="file1" style="font-size:30px;"> DB에 강의 데이터 입력</label><br><br>
+            <input type="file" id="file1" name="file1"><br><br>
+            <button type="submit">입력</button>
+        </form>
+    </div><br>
+    <div>
+        <form action="" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+            <label for="file2" style="font-size:30px;"> DB에 키워드 데이터 입력</label><br><br>
+            <input type="file" id="file2" name="file2"><br><br>
+            <button type="submit">입력</button>
+        </form>
+    </div><br>
+    <div>
+        <form action="" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+            <label for="file3" style="font-size:30px;"> DB에 강의 키워드 데이터 입력</label><br><br>
+            <input type="file" id="file3" name="file3"><br><br>
+            <button type="submit">입력</button>
+        </form>
+    </div>
+</body>
+</html>

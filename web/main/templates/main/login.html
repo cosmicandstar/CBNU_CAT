@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main/css/login_style.css' %}">
+    <title>CBNU A+_login</title>
+</head>
+<body>
+    <div class="base">
+        <img src="{% static 'main/img/logo.png' %}">
+    </div>
+    <div class="login_title">
+        Log in
+    </div>
+
+    <div class="login_container">
+        <form action="../signin/" method="POST">{% csrf_token %}
+            <div>
+                <input type="text" name='user_id' placeholder="ID">
+            </div>
+            <div>
+                <input type="password" name='user_pw' placeholder="PW">
+            </div>
+            <input type="submit" class="signin_button" value="Go!">
+        </form>
+    </div>
+
+    <div class="signup">
+        not a member? <a href="../signup">sign up</a>
+    </div>
+
+</body>
+</html>

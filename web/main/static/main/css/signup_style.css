@@ -1,0 +1,101 @@
+body{background-color: #FFFFFF;}
+input{outline-style:none; border-radius: 0; border: 0; width:95%;}
+button{border: none;}
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+*{font-family: 'Noto Sans KR', sans-serif; font-size: 1.4rem}
+
+.sidebar{
+    margin: 5px 10px 0px;
+    margin-right: 40px;
+    width: 100px;
+    position: absolute;
+    top:50%;
+    transform: translate(-50%, -50%);
+}
+
+/*.sidebar img{
+    margin: 5px 10px 0px;
+    margin-right: 40px;
+    width: 350px;
+    position: absolute;
+    top:50%; left:50%;
+    transform: translate(-50%, -50%);
+}*/
+
+.signup_title{
+    font-weight: bold;
+    position: absolute;
+    top:17%; left:58%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.signup_container{
+    font-size: 2rem;
+    margin: 50px auto;
+    position: absolute;
+    top:52%; left:65%;
+    transform: translate(-50%, -50%);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.signup_container button{
+    display: block;
+}
+
+.signup_container div{
+    border-radius: 40px;
+    background-color: #FFFFFF;
+    border: 1px solid #000000;
+    width: 400px;
+    padding:3px; margin: 10px auto;
+    text-align: center;
+}
+
+input{
+    background-color: #FFFFFF;
+}
+
+input:hover{
+    background-color: #F7F5FF;
+}
+
+input:visited{
+    background-color: #F7F5FF;
+}
+
+.signup_container div:hover{
+    border-radius: 40px;
+    background-color: #F7F5FF;
+    border: 1px solid #5007EF;
+    width: 400px;
+    padding:3px; margin: 10px auto;
+}
+
+.signup_container div:visited{
+    border-radius: 40px;
+    background-color: #F7F5FF;
+    border: 1px solid #5007EF;
+    width: 400px;
+    padding:3px; margin: 10px auto;
+}
+
+.signup{
+    position: absolute;
+    top:72%; left:67%;
+    transform: translate(-50%, -50%);
+}
+
+.signup_container .button{
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 40px;
+    width: 300px; height: 40px;
+    margin-top: 10px;
+    background-color: #5007EF;
+    color: #FFFFFF;
+    float: right;
+}
