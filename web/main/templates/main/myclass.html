@@ -59,9 +59,14 @@
                                                 <br>
                                                 <input type="submit" name="저장">
                                             </form>
-                                            <button class="rebt" onclick="classReset({{ subj.subj_id }})">
-                                                <IMG SRC="{% static 'main/img/pencil.png' %}"  width="15" height="15">
-                                            </button>
+                                            <div>
+                                                <button class="minusbt">
+                                                    <IMG SRC="{% static 'main/img/minus.png' %}"  width="15" height="15"></a>
+                                                </button>
+                                                <button class="rebt" onclick="classReset({{ subj.subj_id }})">
+                                                    <IMG SRC="{% static 'main/img/pencil.png' %}"  width="15" height="15">
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 {% endfor %}

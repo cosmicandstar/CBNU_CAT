@@ -166,11 +166,11 @@ td{
     margin-right: 90px;
 }
 .mykword {
-    display: inline;
+    display: inline-block;
     border-radius: 15px;
     margin-left: 3px;
-    margin-top: 10px;
-    padding: 10px;
+    margin-top: 5px;
+    padding: 5px 10px 5px 10px;
     color: #ffffff;
     background: #ae89fd;
     font-size: 14px;

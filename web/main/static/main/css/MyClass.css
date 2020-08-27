@@ -111,27 +111,6 @@ justify-content: flex-start;
     margin-top: 0px;
 }
 
-.class1 .rebt{
-    margin-left: 375px;
-    border: none;
-    border-radius: 50%;
-    padding: 4px;
-    cursor: pointer;
-    outline: none;
-    height: 100%;
-    width: 23px;
-    color: #fff;
-}
-
-
-
-.class1 .rebt:hover{
-    border: none;
-    cursor: pointer;
-    outline: none;
-    background: #c3b9ff;
-}
-
 .class1 .classinfo .info{
     font-size: 18px;
     font-weight: normal;
@@ -142,6 +121,49 @@ justify-content: flex-start;
     font-style: italic;
     color: rgb(92, 92, 92);
 }
+
+.class1 .minusbt{
+    display: inline-block;
+    margin-left: 340px;
+    border: none;
+    border-radius: 50%;
+    padding: 4px;
+    cursor: pointer;
+    outline: none;
+    height: 100%;
+    width: 23px;
+    color: #fff;
+}
+
+.class1 .minusbt:hover{
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background: #c3b9ff;
+}
+
+.class1 .rebt{
+    display: inline-block;
+    margin-left: 10px;
+    border: none;
+    border-radius: 50%;
+    padding: 4px;
+    cursor: pointer;
+    outline: none;
+    height: 100%;
+    width: 23px;
+    color: #fff;
+}
+
+.class1 .rebt:hover{
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background: #c3b9ff;
+}
+
 .class1 .classinfo .morebt{
     font-size: 10px;
     font-weight: normal;
@@ -156,7 +178,7 @@ justify-content: flex-start;
     outline: none;
     background: #c3b9ff;
 }
-           
+
 .class2 {
     float: center;
     justify-content: space-between;
