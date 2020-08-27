@@ -1,8 +1,7 @@
 body{background-color: #FFFFFF;}
 input{outline-style:none; border-radius: 0; border: 0; width:95%;}
 button{border: none;}
-@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
-*{font-family: 'Noto Sans KR', sans-serif; font-size: 1.4rem}
+*{font-family: 'Montserrat', cursive; font-size: 1.4rem;}
 
 .base img{
     margin: 5px 10px 0px;
@@ -28,10 +27,6 @@ button{border: none;}
     transform: translate(-50%, -50%);
     margin-top: 10px;
     margin-bottom: 10px;
-}
-
-.login_container button{
-    display: block;
 }
 
 .login_container div{
@@ -72,6 +67,7 @@ input:visited{
 }
 
 .login_container button{
+    display: block;
     font-size: 1.2rem;
     font-weight: bold;
     border-radius: 40px;
