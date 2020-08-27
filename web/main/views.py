@@ -333,14 +333,15 @@ def classrec(request):
         recommend_subjects = []
         # 모델 연결 후 정렬 다시
         try:
-            if int(data['menu4']) == 1:
-
+            menu4 = int(data['menu4'])
+            if menu4 != 0:
                 # 데이터 불러오기
                 user_keywords = list(UserKeyword.objects.filter(user_id=user.id).values_list('keyword_id', 'flag'))
                 user_keywords = [list(x) for x in user_keywords]
 
                 ratings = list(UserSubject.objects.values_list('user_id', 'subj_id', 'rating'))
                 ratings = [list(x) for x in ratings]
+
                 goods_single = list(UserSubject.objects.filter(user_id=user.id).values_list('subj_id', 'good'))
                 goods_single = [list(x) for x in goods_single]
 
@@ -353,26 +354,17 @@ def classrec(request):
                 lecture = list(SubjectKeywords.objects.values_list('subj_id', 'keyword_id', 'value'))
                 lecture = [list((x[0], x[1], 1)) if x[2] > 1 else list(x) for x in lecture] #  if subjects_id.count(x[0]) > 0
 
+                alpha = [0.7, 0.4, 0.2, 0.1]
+                if menu4 == 2:
+                    alpha = alpha.reverse()
 
-                ts, lecture_list = total_sim(goods, wish, ratings, lecture, [0.7, 0.4, 0.2, 0.1])
+                ts, lecture_list = total_sim(goods, wish, ratings, lecture, alpha)
                 user = user_input(goods_single, lecture_list)
                 recommend_ = recommend(ts, user)
 
                 for i in recommend_:
                     subj = Subject.objects.get(subj_id=i)
                     recommend_subjects.append(subj)
-
-
-
-                # 키워드 기반 추천
-                '''lecture_long = pd.DataFrame(lecture, columns=['id', 'keyword', 'value'])
-                user_keyword = pd.DataFrame(user_keywords, columns=['keyword', 'key'])
-
-                lecture_wide = pre_lec(lecture_long)
-                recommend = keyword_sort(user_keyword, lecture_wide)
-                for i in recommend:
-                    subj = Subject.objects.get(subj_id=i)
-                    recommend_subjects.append(subj)'''
 
         except:
             print('except')
@@ -398,7 +390,7 @@ def classrec(request):
             except:
                 real_subjects.append(subject)
 
-        paginator = Paginator(real_subjects, 100)
+        paginator = Paginator(real_subjects, 5)
 
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -498,6 +490,20 @@ def myclass(request):
                 user_subject_list.append(subject)
         except:
             pass
+        real_wish_subjects = []
+        for subject in wish_list:
+            try:
+                keywords = get_list_or_404(SubjectKeywords.objects.exclude(value=0), subj_id=subject.subj_id)
+                keyword_list = []
+                adding_subject = subject
+                for keyword in keywords:
+                    keyword_data = SubjectKeyword.objects.get(keyword_id=keyword.keyword_id)
+                    keyword_list.append(keyword_data)
+                adding_subject.keywords = keyword_list
+                real_wish_subjects.append(adding_subject)
+            except:
+                real_wish_subjects.append(subject)
+
         real_subjects = []
         for subject in user_subject_list:
             try:
@@ -513,7 +519,7 @@ def myclass(request):
                 real_subjects.append(subject)
 
 
-        return render(request, 'main/myclass.html', {'wishlist': wish_list, 'usersubjlist': real_subjects, 'user': get_object_or_404(User, userid=request.session['userid'])})
+        return render(request, 'main/myclass.html', {'wishlist': real_wish_subjects, 'usersubjlist': real_subjects, 'user': get_object_or_404(User, userid=request.session['userid'])})
     except KeyError:
         return HttpResponseRedirect(reverse('index'))
 
