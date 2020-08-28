@@ -17,7 +17,8 @@
                     <select id="menu6" name="menu4" class="classTypeSelect2" form="searchForm" size="1" style="min-width: 90px; display:inline-block;" >
                         <option value="0" {% if get.menu4 == '0' %} selected {% endif %} >가나다순</option>
                         <option value="1" {% if get.menu4 == '1' %} selected {% endif %} >추천순</option>
-                        <option value="2" {% if get.menu4 == '2' %} selected {% endif %} >키워드순</option>
+                        <option value="2" {% if get.menu4 == '2' %} selected {% endif %} >강의 키워드 유사도순</option>
+                        <option value="3" {% if get.menu4 == '3' %} selected {% endif %} >선택 키워드순</option>
                     </select>
                     <select name="menu" class="classTypeSelect1" form="searchForm" size="1" onChange="changeClassType()" style="min-width: 90px; display:inline-block;">
                         <option value="0" {% if get.menu == '0' %} selected {% endif %} >전체</option>
