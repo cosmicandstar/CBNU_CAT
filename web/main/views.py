@@ -165,7 +165,7 @@ def total_sim(like_data, wish_data, score_data, lecture_data, alpha):
 
     like_sim = sim(like_wide, lecture_list)
     score_sim = sim(score_wide, lecture_list)
-    print(score_sim)
+    #print(score_sim)
     lecture_sim = sim_lecture(lecture_wide, lecture_list)
 
     ts = like_sim * alpha[0] + score_sim * alpha[1] + lecture_sim * alpha[3]
@@ -333,6 +333,7 @@ def classrec(request):
         recommend_subjects = []
         # 모델 연결 후 정렬 다시
         try:
+        #if(True):
             menu4 = int(data['menu4'])
             if menu4 != 0:
                 # 데이터 불러오기
@@ -354,13 +355,23 @@ def classrec(request):
                 lecture = list(SubjectKeywords.objects.values_list('subj_id', 'keyword_id', 'value'))
                 lecture = [list((x[0], x[1], 1)) if x[2] > 1 else list(x) for x in lecture] #  if subjects_id.count(x[0]) > 0
 
-                alpha = [0.7, 0.4, 0.2, 0.1]
+                alpha = [0.7, 0.4, 0.4, 0.1]
+
                 if menu4 == 2:
-                    alpha = alpha.reverse()
+                    alpha.reverse()
 
                 ts, lecture_list = total_sim(goods, wish, ratings, lecture, alpha)
                 user = user_input(goods_single, lecture_list)
                 recommend_ = recommend(ts, user)
+
+                if menu4 == 3:
+                    print("야호랑이똥개")
+                    #print(lecture)
+                    user_keywords_wide = pd.DataFrame(user_keywords, columns=["keyword","key"])
+                    lecture_temp = pd.DataFrame(lecture, columns=["id", "keyword", "value"])
+                    print(pre_lec(lecture_temp))
+                    recommend_ = keyword_sort(user_keywords_wide,pre_lec(lecture_temp))
+                    print(recommend_)
 
                 for i in recommend_:
                     subj = Subject.objects.get(subj_id=i)
