@@ -1,0 +1,98 @@
+body{background-color: #F9F9F9;}
+input{outline-style:none; border-radius: 0; border: 0; width:95%;}
+button{border: none;}
+*{font-family: 'Noto Sans KR', sans-serif; font-size: 1.4rem;}
+
+.sidebar .login_title{
+    font-weight: bold;
+    position: absolute;
+    top:5%; left:7.5%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.sidebar img{
+    position: absolute;
+    top:30%; left:2%;
+}
+
+.login_container{
+    font-weight: bolder;
+    font-size: 1.2rem;
+    margin: 50px auto;
+    position: absolute;
+    top:45%; left:50%;
+    transform: translate(-50%, -50%);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.login_container div{
+    border-radius: 15px;
+    background-color: #F2F2F2;
+    border: 1px solid #BABABA;
+    width: 300px;
+    padding:3px; margin: 10px auto;
+    text-align: center;
+}
+
+input{
+    background-color: #F2F2F2;
+}
+
+input:hover{
+    background-color: #F7F5FF;
+}
+
+input:visited{
+    background-color: #F7F5FF;
+}
+
+.login_container div:hover{
+    border-radius: 15px;
+    background-color: #F7F5FF;
+    border: 1px solid #111051;
+    width: 300px;
+    padding:3px; margin: 10px auto;
+}
+
+.login_container div:visited{
+    border-radius: 15px;
+    background-color: #F7F5FF;
+    border: 1px solid #111051;
+    width: 300px;
+    padding:3px; margin: 10px auto;
+}
+
+.login_container button{
+    display: block;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 40px;
+    width: 150px; height: 40px;
+    padding: 2px; margin-top: 10px;
+    padding-left:10px; padding-right: 10px;
+    background-color: #111051;
+    color: #FFFFFF;
+    float: right;
+}
+
+.signup{
+    font-size: 1rem;
+    position: absolute;
+    top:95%; left:50%;
+    transform: translate(-50%, -50%);
+}
+
+.signup .sup{
+    font-size: 1rem;
+    border-radius: 40px;
+    background-color: #111051;
+    border: 1.5px solid #111051;
+    width: 150px;
+    padding: 2px; margin: 10px auto;
+    padding-left:15px; padding-right: 15px;
+    color: #F9F9F9;
+}

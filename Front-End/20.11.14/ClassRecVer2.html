@@ -1,0 +1,547 @@
+<html>
+    <head>
+        <title>COSMIC [class recommender system] Recommender</title>
+        <LINK HREF="ClassRecVer2.css" rel="stylesheet" />
+        <script src="ClassRecVer2.js" ></script>
+    </head>
+    <body>
+        <div class="all"> 
+            <div class="menu_bar">
+                <div class="profile">
+                    <div class="profile_logo">
+                        <img src="main_logo.png" width="40px" height='40px' >
+                    </div>
+                    <div class="profile_name">
+                        <span style="font-size: 15px; font-weight: bold; ">이준석</span><br>
+                        <span style="font-size: 10px; font-weight: bold; opacity: 50; ">2019037032</span>
+                    </div>
+                </div>
+
+                <ul class="menu_list" >
+                    <li class="menu_button" >
+                        <A HREF="PreLecVer2.html" >
+                            <img src="들었던강의.png" width="200" height='40' >
+                        </A>
+                    </li>
+                    <li class="menu_button_thisPage">
+                        <A HREF="ClassRecVer2.html"  >
+                            <img src="recommender.png" width="200" height='40' >
+                        </A>
+                    </li>
+                    <li class="menu_button">
+                        <A HREF="my_classVer2.html" >
+                            <img src="my_class.png" width="200" height='40' >
+                        </A>
+                    </li>   
+                </ul>
+
+            </div>
+
+            <div class="container" >
+                <div class="page_title">
+                    <span style="font-size: 55px; font-weight: bold; ">Recommender</span>
+                </div>
+                <div class="content_container">
+                    <div class="setting_container">
+                        <div class="setting_title">
+                            <span style="font-size: 35px; font-weight: bold; ">Setting</span>
+                        </div>
+                        <div class="mbti_window">
+                            <span style="font-size: 25px; font-weight: bold; ">MBTI</span>
+                            <select name='mbti' class="mbtiSelect" onchange="changeMbti()">      
+                                <option value='INTJ'>INTJ</option>
+                                <option value='INTP'>INTP</option>
+                                <option value='INFJ'>INFJ</option>
+                                <option value='INFP'>INFP</option>
+                                <option value='ISTJ'>ISTJ</option>
+                                <option value='ISTP'>ISTP</option>
+                                <option value='ISFJ'>ISFJ</option>
+                                <option value='ISFP'>ISFP</option>
+                                <option value='ENTJ'>ENTJ</option>
+                                <option value='ENTP'>ENTP</option>
+                                <option value='ENFJ'>ENFJ</option>
+                                <option value='ENFP'>ENFP</option>
+                                <option value='ESTJ'>ESTJ</option>
+                                <option value='ESTP'>ESTP</option>
+                                <option value='ESFJ'>ESFJ</option>
+                                <option value='ESFP'>ESFP</option>
+                            </select>
+                            <br>
+                            <div class="mbtiframe" id="mbtiframeRed"> 
+                                <div class="mymbti" style="font-size: 25px; font-weight: bold; position: relative; text-align: center;">INTJ</div>
+                                <!--<IMG SRC="INTJ.png" style="position: relative; left: 120px;" width="357" height='257'> -->
+                            </div>
+                        </div>
+                        <div class="keyword_window">
+                            <span style="font-size: 25px; font-weight: bold; ">Keyword</span><br>
+                            <span style="font-size: 15px; font-weight: bold; opacity: 0.5; ">selected</span>
+                            <div class="selected_keyword_window">
+                                <div class="selected_keyword_button">조별과제</div>
+                                <div class="selected_keyword_button">필기 중요</div>
+                                <div class="selected_keyword_button">매주 리포트</div>
+                                <div class="selected_keyword_button">수업시간 엄수</div>
+                            </div>
+                            <span style="font-size: 15px; font-weight: bold; opacity: 0.5; ">Unselected</span>
+                            <div class="unselected_keyword_window">
+                                <div class="unselected_keyword_button">조별과제</div>
+                                <div class="unselected_keyword_button">필기 중요</div>
+                                <div class="unselected_keyword_button">매주 리포트</div>
+                                <div class="unselected_keyword_button">수업시간 엄수</div>
+                                <div class="unselected_keyword_button">조별과제</div>
+                                <div class="unselected_keyword_button">필기 중요</div>
+                                <div class="unselected_keyword_button">매주 리포트</div>
+                                <div class="unselected_keyword_button">수업시간 엄수</div>
+                                <div class="unselected_keyword_button">조별과제</div>
+                                <div class="unselected_keyword_button">필기 중요</div>
+                                <div class="unselected_keyword_button">매주 리포트</div>
+                                <div class="unselected_keyword_button">수업시간 엄수</div>
+                                <div class="unselected_keyword_button">조별과제</div>
+                                <div class="unselected_keyword_button">필기 중요</div>
+                                <div class="unselected_keyword_button">매주 리포트</div>
+                                <div class="unselected_keyword_button">수업시간 엄수</div>
+
+                            </div>
+                        </div>
+                        <div class="save_setting_button_window">
+                            <div class="save_setting_button"> 
+                                <span style="font-size: 15px; font-weight: bold; ">SAVE</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search_container">
+                        <div class="search_window">
+                            <div class="search_title">
+                                <span style="font-size: 30px; font-weight: bold; ">Search</span>
+                            </div>
+                            <div class="classTypeFrame">
+                                <select name="menu1" class="classTypeSelect1" size="1" onChange="changeClassType()">
+                                    <option selected>---첫번째 항목---</option>
+                                    <option value="1">일반교양</option>
+                                    <option value="2">확대교양</option>
+                                    <option value="3">심화교양</option>
+                                </select>  
+                                <select name="menu2_1" class="classTypeSelect2" size="1" style="display: block;" >
+                                    <option value=" " selected>전체</option>
+                                    <option value=" ">인간과 문화</option>
+                                    <option value=" ">사회와 역사</option>
+                                    <option value=" ">자연과 과학</option>
+                                </select>
+                                <select name="menu2_2" class="classTypeSelect2" size="1" style="display: none;" >
+                                    <option value=" " selected>전체</option>
+                                    <option value=" ">미래융복합</option>
+                                    <option value=" ">국제화</option>
+                                    <option value=" ">진로와 취업</option>
+                                    <option value=" ">예술과 체육</option>
+                                </select>
+                                <select name="menu2_3" class="classTypeSelect2" size="1" style="display: none;" >
+                                    <option value=" " selected>전체</option>
+                                    <option value=" ">문학과 문화</option>
+                                    <option value=" ">역사와 철학</option>
+                                    <option value=" ">자연과 생명</option>
+                                    <option value=" ">기술과 문명</option>
+                                    <option value=" ">예술과 체육</option>
+                                </select>
+                                <input type="text" class="classNameSearch" name="keyword" size="20" placeholder="type class name here"> 
+                                <button class="searchBt"> <img src="searchbtn.png" width="12" height="12"> </button>
+                            </div>
+                        </div>
+                        <div class="class_window">
+                            <div class="class_basic_window">
+                                <div class="class_name_window">
+                                    <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span><br>
+                                    <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                                </div>
+                                <div class="class_keyword_window">
+                                    <div class="selected_keyword_show">조별과제</div>
+                                    <div class="selected_keyword_show">필기 중요</div>
+                                    <div class="unselected_keyword_show">매주 리포트</div>
+                                    <div class="unselected_keyword_show">수업시간 엄수</div>  
+                                </div>
+                                <div class="class_button_window">
+                                    <div class="plus_button">
+                                        <img src="plus.png" width="15" height="15">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="class_more_window">
+                                <div class="more_info" id="more_info_" style="display: none;">
+                                    <div class="more_info_window">
+                                        <div class="info_Table" >
+                                            <br>
+                                            <table width ="300" height="30">
+                                                <tr>
+                                                    <td>강의시간</td>
+                                                    <td>{{ subject.time }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>강의실</td>
+                                                    <td>{{ subject.room }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="scoreRatio" >
+                                            <span style="font-size: 17px; font-weight: bold;"> 평가방법 </span>
+                                            <table width ="400" height="10">
+                                                <tr>
+                                                    <td>중간고사</td>
+                                                    <td>
+                                                        <div class="midEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>기말고사</td>
+                                                    <td>
+                                                        <div class="finalEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>출석</td>
+                                                    <td>
+                                                        <div class="attend" style="width: calc(500px * 0.2);"> 20%</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>   
+                                </div>
+                                <div class="more_button" onclick="moreshow()" >
+                                    <span style="font-size: 12px; font-weight: bold; "> 더보기</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="class_window">
+                            <div class="class_basic_window">
+                                <div class="class_name_window">
+                                    <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span><br>
+                                    <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                                </div>
+                                <div class="class_keyword_window">
+                                    <div class="selected_keyword_show">조별과제</div>
+                                    <div class="selected_keyword_show">필기 중요</div>
+                                    <div class="unselected_keyword_show">매주 리포트</div>
+                                    <div class="unselected_keyword_show">수업시간 엄수</div>  
+                                </div>
+                                <div class="class_button_window">
+                                    <div class="plus_button">
+                                        <img src="plus.png" width="15" height="15">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="class_more_window">
+                                <div class="more_info" id="more_info_" style="display: none;">
+                                    <div class="more_info_window">
+                                        <div class="info_Table" >
+                                            <br>
+                                            <table width ="300" height="30">
+                                                <tr>
+                                                    <td>강의시간</td>
+                                                    <td>{{ subject.time }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>강의실</td>
+                                                    <td>{{ subject.room }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="scoreRatio" >
+                                            <span style="font-size: 17px; font-weight: bold;"> 평가방법 </span>
+                                            <table width ="400" height="10">
+                                                <tr>
+                                                    <td>중간고사</td>
+                                                    <td>
+                                                        <div class="midEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>기말고사</td>
+                                                    <td>
+                                                        <div class="finalEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>출석</td>
+                                                    <td>
+                                                        <div class="attend" style="width: calc(500px * 0.2);"> 20%</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>   
+                                </div>
+                                <div class="more_button" onclick="moreshow()" >
+                                    <span style="font-size: 12px; font-weight: bold; "> 더보기</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="class_window">
+                            <div class="class_basic_window">
+                                <div class="class_name_window">
+                                    <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span><br>
+                                    <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                                </div>
+                                <div class="class_keyword_window">
+                                    <div class="selected_keyword_show">조별과제</div>
+                                    <div class="selected_keyword_show">필기 중요</div>
+                                    <div class="unselected_keyword_show">매주 리포트</div>
+                                    <div class="unselected_keyword_show">수업시간 엄수</div>  
+                                </div>
+                                <div class="class_button_window">
+                                    <div class="plus_button">
+                                        <img src="plus.png" width="15" height="15">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="class_more_window">
+                                <div class="more_info" id="more_info_" style="display: none;">
+                                    <div class="more_info_window">
+                                        <div class="info_Table" >
+                                            <br>
+                                            <table width ="300" height="30">
+                                                <tr>
+                                                    <td>강의시간</td>
+                                                    <td>{{ subject.time }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>강의실</td>
+                                                    <td>{{ subject.room }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="scoreRatio" >
+                                            <span style="font-size: 17px; font-weight: bold;"> 평가방법 </span>
+                                            <table width ="400" height="10">
+                                                <tr>
+                                                    <td>중간고사</td>
+                                                    <td>
+                                                        <div class="midEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>기말고사</td>
+                                                    <td>
+                                                        <div class="finalEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>출석</td>
+                                                    <td>
+                                                        <div class="attend" style="width: calc(500px * 0.2);"> 20%</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>   
+                                </div>
+                                <div class="more_button" onclick="moreshow()" >
+                                    <span style="font-size: 12px; font-weight: bold; "> 더보기</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="class_window">
+                            <div class="class_basic_window">
+                                <div class="class_name_window">
+                                    <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span><br>
+                                    <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                                </div>
+                                <div class="class_keyword_window">
+                                    <div class="selected_keyword_show">조별과제</div>
+                                    <div class="selected_keyword_show">필기 중요</div>
+                                    <div class="unselected_keyword_show">매주 리포트</div>
+                                    <div class="unselected_keyword_show">수업시간 엄수</div>  
+                                </div>
+                                <div class="class_button_window">
+                                    <div class="plus_button">
+                                        <img src="plus.png" width="15" height="15">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="class_more_window">
+                                <div class="more_info" id="more_info_" style="display: none;">
+                                    <div class="more_info_window">
+                                        <div class="info_Table" >
+                                            <br>
+                                            <table width ="300" height="30">
+                                                <tr>
+                                                    <td>강의시간</td>
+                                                    <td>{{ subject.time }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>강의실</td>
+                                                    <td>{{ subject.room }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="scoreRatio" >
+                                            <span style="font-size: 17px; font-weight: bold;"> 평가방법 </span>
+                                            <table width ="400" height="10">
+                                                <tr>
+                                                    <td>중간고사</td>
+                                                    <td>
+                                                        <div class="midEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>기말고사</td>
+                                                    <td>
+                                                        <div class="finalEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>출석</td>
+                                                    <td>
+                                                        <div class="attend" style="width: calc(500px * 0.2);"> 20%</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>   
+                                </div>
+                                <div class="more_button" onclick="moreshow()" >
+                                    <span style="font-size: 12px; font-weight: bold; "> 더보기</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="class_window">
+                            <div class="class_basic_window">
+                                <div class="class_name_window">
+                                    <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span><br>
+                                    <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                                </div>
+                                <div class="class_keyword_window">
+                                    <div class="selected_keyword_show">조별과제</div>
+                                    <div class="selected_keyword_show">필기 중요</div>
+                                    <div class="unselected_keyword_show">매주 리포트</div>
+                                    <div class="unselected_keyword_show">수업시간 엄수</div>  
+                                </div>
+                                <div class="class_button_window">
+                                    <div class="plus_button">
+                                        <img src="plus.png" width="15" height="15">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="class_more_window">
+                                <div class="more_info" id="more_info_" style="display: none;">
+                                    <div class="more_info_window">
+                                        <div class="info_Table" >
+                                            <br>
+                                            <table width ="300" height="30">
+                                                <tr>
+                                                    <td>강의시간</td>
+                                                    <td>{{ subject.time }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>강의실</td>
+                                                    <td>{{ subject.room }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="scoreRatio" >
+                                            <span style="font-size: 17px; font-weight: bold;"> 평가방법 </span>
+                                            <table width ="400" height="10">
+                                                <tr>
+                                                    <td>중간고사</td>
+                                                    <td>
+                                                        <div class="midEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>기말고사</td>
+                                                    <td>
+                                                        <div class="finalEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>출석</td>
+                                                    <td>
+                                                        <div class="attend" style="width: calc(500px * 0.2);"> 20%</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>   
+                                </div>
+                                <div class="more_button" onclick="moreshow()" >
+                                    <span style="font-size: 12px; font-weight: bold; "> 더보기</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="class_window">
+                            <div class="class_basic_window">
+                                <div class="class_name_window">
+                                    <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span><br>
+                                    <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                                </div>
+                                <div class="class_keyword_window">
+                                    <div class="selected_keyword_show">조별과제</div>
+                                    <div class="selected_keyword_show">필기 중요</div>
+                                    <div class="unselected_keyword_show">매주 리포트</div>
+                                    <div class="unselected_keyword_show">수업시간 엄수</div>  
+                                </div>
+                                <div class="class_button_window">
+                                    <div class="plus_button">
+                                        <img src="plus.png" width="15" height="15">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="class_more_window">
+                                <div class="more_info" id="more_info_" style="display: none;">
+                                    <div class="more_info_window">
+                                        <div class="info_Table" >
+                                            <br>
+                                            <table width ="300" height="30">
+                                                <tr>
+                                                    <td>강의시간</td>
+                                                    <td>{{ subject.time }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>강의실</td>
+                                                    <td>{{ subject.room }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="scoreRatio" >
+                                            <span style="font-size: 17px; font-weight: bold;"> 평가방법 </span>
+                                            <table width ="400" height="10">
+                                                <tr>
+                                                    <td>중간고사</td>
+                                                    <td>
+                                                        <div class="midEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>기말고사</td>
+                                                    <td>
+                                                        <div class="finalEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>출석</td>
+                                                    <td>
+                                                        <div class="attend" style="width: calc(500px * 0.2);"> 20%</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>   
+                                </div>
+                                <div class="more_button" onclick="moreshow()" >
+                                    <span style="font-size: 12px; font-weight: bold; "> 더보기</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        
+                      
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </body>
+</html>
