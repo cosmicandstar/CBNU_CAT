@@ -1,0 +1,184 @@
+<html>
+    <head>
+        <title>COSMIC [class recommender system] 들었던 수업</title>
+        <LINK HREF="PreLecVer2.css" rel="stylesheet" />
+        <script src="PreLecVer2.js" ></script>
+    </head>
+    <body>
+        <div class="all"> 
+            <div class="menu_bar">
+                <div class="profile">
+                    <div class="profile_logo">
+                        <img src="main_logo.png" width="40px" height='40px' >
+                    </div>
+                    <div class="profile_name">
+                        <span style="font-size: 15px; font-weight: bold; ">이준석</span><br>
+                        <span style="font-size: 10px; font-weight: bold; opacity: 50; ">2019037032</span>
+                    </div>
+                </div>
+
+                <ul class="menu_list" >
+                    <li class="menu_button_thisPage" >
+                        <A HREF="PreLecVer2.html" >
+                            <img src="들었던강의.png" width="200" height='40' >
+                        </A>
+                    </li>
+                    <li class="menu_button">
+                        <A HREF="ClassRecVer2.html"  >
+                            <img src="recommender.png" width="200" height='40' >
+                        </A>
+                    </li>
+                    <li class="menu_button">
+                        <A HREF="my_classVer2.html" >
+                            <img src="my_class.png" width="200" height='40' >
+                        </A>
+                    </li>   
+                </ul>
+
+            </div>
+
+            <div class="container" >
+                <div class="page_title">
+                    <span style="font-size: 50px; font-weight: 900; ">들었던 강의</span>
+                </div>
+                <div class="content_container">
+                    <div class="setting_container">
+                        <div class="setting_title">
+                            <span style="font-size: 20px; font-weight: bold; "> "일상생활의 심리학" 평가</span>
+                        </div>
+                        <div class="score_window">
+                            <span style="font-size: 15px; font-weight: bold; ">학점</span>
+                            <br>
+                            <select class="score_select">      
+                                <option value='A+'>A+</option>
+                                <option value='A0'>A0</option>
+                                <option value='B+'>B+</option>
+                                <option value='B0'>B0</option>
+                                <option value='C+'>C+</option>
+                                <option value='C0'>C0</option>
+                                <option value='D+'>D+</option>
+                                <option value='D0'>D0</option>
+                                <option value='F'>F</option>
+                                <option value='PASS'>PASS</option>
+                                <option value='FAIL'>FAIL</option>
+                            </select>
+                            <br>
+                        </div>
+                        <div class="satisfaction_window">
+                            <span style="font-size: 15px; font-weight: bold; ">만족도</span>
+                                <br><input type="range" name="good"><br>   
+                        </div>
+                        <div class="keyword_window">
+                            <span style="font-size: 15px; font-weight: bold; ">이 수업의 키워드</span><br>
+                            <span style="font-size: 15px; font-weight: bold; opacity: 0.5; ">selected</span>
+                            <div class="selected_keyword_window">
+                                <div class="selected_keyword_button">조별과제</div>
+                                <div class="selected_keyword_button">필기 중요</div>
+                                <div class="selected_keyword_button">매주 리포트</div>
+                                <div class="selected_keyword_button">수업시간 엄수</div>
+                            </div>
+                            <span style="font-size: 15px; font-weight: bold; opacity: 0.5; ">Unselected</span>
+                            <div class="unselected_keyword_window">
+                                <div class="unselected_keyword_button">조별과제</div>
+                                <div class="unselected_keyword_button">필기 중요</div>
+                                <div class="unselected_keyword_button">매주 리포트</div>
+                                <div class="unselected_keyword_button">수업시간 엄수</div>
+                                <div class="unselected_keyword_button">조별과제</div>
+                                <div class="unselected_keyword_button">필기 중요</div>
+                                <div class="unselected_keyword_button">매주 리포트</div>
+                                <div class="unselected_keyword_button">수업시간 엄수</div>
+                                <div class="unselected_keyword_button">조별과제</div>
+                                <div class="unselected_keyword_button">필기 중요</div>
+                                <div class="unselected_keyword_button">매주 리포트</div>
+                                <div class="unselected_keyword_button">수업시간 엄수</div>
+                                <div class="unselected_keyword_button">조별과제</div>
+                                <div class="unselected_keyword_button">필기 중요</div>
+                                <div class="unselected_keyword_button">매주 리포트</div>
+                                <div class="unselected_keyword_button">수업시간 엄수</div>
+
+                            </div>
+                        </div>
+                        <div class="save_setting_button_window">
+                            <div class="save_setting_button"> 
+                                <span style="font-size: 15px; font-weight: bold; ">SAVE</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search_container">
+                        <div class="search_window">
+                            <div class="search_title">
+                                <span style="font-size: 30px; font-weight: bold; ">Search</span>
+                            </div>
+                            <div class="classTypeFrame">
+                                <input type="text" class="classNameSearch" name="keyword" size="50" placeholder="type class name here"> 
+                                <button class="searchBt"> <img src="searchbtn.png" width="12" height="12"> </button>
+                            </div>
+                        </div>
+                        <div class="class_window">
+                            <div class="class_name_window">
+                                <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span>
+                                <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                            </div>        
+                        </div>
+                        <div class="class_window">
+                            <div class="class_name_window">
+                                <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span>
+                                <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                            </div>        
+                        </div>
+                        <div class="class_window">
+                            <div class="class_name_window">
+                                <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span>
+                                <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                            </div>        
+                        </div>
+                        <div class="class_window">
+                            <div class="class_name_window">
+                                <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span>
+                                <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                            </div>        
+                        </div>
+                        <div class="class_window">
+                            <div class="class_name_window">
+                                <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span>
+                                <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                            </div>        
+                        </div>
+                        <div class="class_window">
+                            <div class="class_name_window">
+                                <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span>
+                                <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                            </div>        
+                        </div>
+                        <div class="class_window">
+                            <div class="class_name_window">
+                                <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span>
+                                <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                            </div>        
+                        </div>
+                        <div class="class_window">
+                            <div class="class_name_window">
+                                <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span>
+                                <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                            </div>        
+                        </div>
+                        <div class="class_window">
+                            <div class="class_name_window">
+                                <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span>
+                                <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                            </div>        
+                        </div>
+                        <div class="class_window">
+                            <div class="class_name_window">
+                                <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span>
+                                <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                            </div>        
+                        </div>
+                      
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </body>
+</html>

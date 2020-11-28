@@ -1,0 +1,30 @@
+body{background-color: #F9F9F9;}
+input{outline-style:none; border-radius: 0; border: 0; width:95%;}
+button{border: none;}
+*{font-family: 'Noto Sans KR', sans-serif; font-size: 1.4rem;}
+
+.sidebar .about_title{
+    font-weight: bold;
+    position: absolute;
+    top:5%; left:32%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.sidebar img{
+    position: absolute;
+    top:30%; left:2%;
+}
+
+.about_container{
+    font-weight: bolder;
+    font-size: 1.2rem;
+    margin: 50px auto;
+    position: absolute;
+    top:55%; left:50%;
+    transform: translate(-50%, -50%);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
