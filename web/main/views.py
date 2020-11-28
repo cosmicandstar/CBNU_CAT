@@ -10,7 +10,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.urls import reverse
 from django.core.paginator import Paginator
-
+import json
 
 from .models import *
 
@@ -23,7 +23,7 @@ def index(request):
 def login(request):
     try:
         request.session['userid']
-        return HttpResponseRedirect(reverse('myinfo'))
+        return HttpResponseRedirect(reverse('main:class_rec_ver2'))
     except:
         return render(request, 'main/login.html')
 
@@ -34,7 +34,7 @@ def sign_in(request):
     try:
         user = User.objects.get(userid=user_id, password=user_pw)
         request.session['userid'] = user_id
-        return HttpResponseRedirect(reverse('myinfo'))
+        return HttpResponseRedirect(reverse('main:class_rec_ver2'))
     except User.DoesNotExist:
         return HttpResponse('실패')
 
@@ -64,9 +64,9 @@ def join(request):
                 flag=0
             )
         request.session['userid'] = user_id
-        return HttpResponseRedirect(reverse('myinfo'))
+        return HttpResponseRedirect(reverse('main:class_rec_ver2'))
 
-    return HttpResponseRedirect(reverse('signup'))
+    return HttpResponseRedirect(reverse('main:signup'))
 
 
 def myinfo(request):
@@ -93,10 +93,10 @@ def myinfo(request):
                 user_keyword = get_list_or_404(UserKeyword, user_id=user.id)
         except:
             pass
-        return render(request, 'main/myinfo.html', {'user': get_object_or_404(User, userid=request.session['userid']),
+        return render(request, 'main/class_lec_ver2.html', {'user': get_object_or_404(User, userid=request.session['userid']),
                                                     'user_keywords': user_keyword})
     except KeyError:
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('main:index'))
 
 
 def mbti(request):
@@ -105,9 +105,9 @@ def mbti(request):
         user = User.objects.get(userid=request.session['userid'])
         user.mbti = value
         user.save()
-        return HttpResponseRedirect(reverse('myinfo'))
+        return HttpResponseRedirect(reverse('main:class_rec_ver2'))
     except KeyError:
-        return HttpResponseRedirect(reverse('myinfo'))
+        return HttpResponseRedirect(reverse('main:class_rec_ver2'))
 
 
 def keyword(request, id):
@@ -296,7 +296,7 @@ def classrec(request):
             data = request.GET
             menu = int(data['menu'])
             keyword = str(data['keyword'])
-
+            
             if menu > 0:
                 menulist = [[],
                             ['일반교양', '인간과문화', '사회와역사', '자연과과학'],
@@ -420,10 +420,16 @@ def classrec(request):
 
         keywords = SubjectKeyword.objects.all()
 
-        return render(request, 'main/classrec.html', {'subjects': real_subjects, 'user': get_object_or_404(User, userid=request.session['userid'])
-                                                      , 'get': data, 'page_obj': page_obj, 'keywords': keywords})
+        return render(request, 'main/class_rec_ver2.html', {
+        'subjects': real_subjects, 
+        'user': get_object_or_404(User, userid=request.session['userid']), 
+        'get': data, 
+        'page_obj': page_obj, 
+        'keywords': keywords,
+        })
+
     except KeyError:
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('main:index'))
 
 
 def logout(request):
@@ -542,7 +548,7 @@ def myclass(request):
                 real_subjects.append(subject)
 
 
-        return render(request, 'main/myclass.html', {'wishlist': real_wish_subjects, 'usersubjlist': real_subjects, 'user': get_object_or_404(User, userid=request.session['userid'])})
+        return render(request, 'main/my_class_ver2.html', {'wishlist': real_wish_subjects, 'usersubjlist': real_subjects, 'user': get_object_or_404(User, userid=request.session['userid'])})
     except KeyError:
         return HttpResponseRedirect(reverse('index'))
 
@@ -552,9 +558,9 @@ def wish(request, id):
         user = User.objects.get(userid=request.session['userid'])
         wish = WishList(user_id=user.id, subj_id=id)
         wish.save()
-        return HttpResponseRedirect(reverse('classrec'))
+        return HttpResponseRedirect(reverse('main:class_rec_ver2'))
     except KeyError:
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('main:index'))
 
 
 def delete_wish(request, id):
@@ -562,9 +568,9 @@ def delete_wish(request, id):
         user = User.objects.get(userid=request.session['userid'])
         wish = WishList.objects.get(user_id=user.id, subj_id=id)
         wish.delete()
-        return HttpResponseRedirect(reverse('myclass'))
+        return HttpResponseRedirect(reverse('main:my_class_ver2'))
     except KeyError:
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('main:index'))
 
 
 def subject(request, id):
@@ -574,9 +580,9 @@ def subject(request, id):
         rating = float(request.GET['grade'])
         user_subject = UserSubject(user_id=user.id, subj_id=id, good=good, rating=rating)
         user_subject.save()
-        return HttpResponseRedirect(reverse('classrec'))
+        return HttpResponseRedirect(reverse('main:class_rec_ver2'))
     except KeyError:
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('main:index'))
 
 
 def delete_subject(request, id):
@@ -584,9 +590,9 @@ def delete_subject(request, id):
         user = User.objects.get(userid=request.session['userid'])
         user_subject = UserSubject.objects.get(user_id=user.id, subj_id=id)
         user_subject.delete()
-        return HttpResponseRedirect(reverse('myclass'))
+        return HttpResponseRedirect(reverse('main:my_class_ver2'))
     except KeyError:
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('main:index'))
 
 
 def subject_(request, id):
@@ -598,6 +604,152 @@ def subject_(request, id):
         user_subject.good = good
         user_subject.rating = rating
         user_subject.save()
-        return HttpResponseRedirect(reverse('myclass'))
+        return HttpResponseRedirect(reverse('main:my_class_ver2'))
     except KeyError:
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('main:index'))
+
+
+#######################################################################################################################################
+
+
+def search_subject(request):
+    user = User.objects.get(userid=request.session['userid'])
+    user_subject_list = UserSubject.objects.filter(user_id=user.pk)
+    subject_list = Subject.objects.all()
+    if request.method == 'GET':
+        q = request.GET.get('q', '')
+        if q:
+            qs = subject_list.filter(subj_name__icontains=q)
+            for user_subject in user_subject_list:
+                qs.exclude(subj_id=user_subject.subj_id)
+        else:
+            qs = None
+
+        return render(request, 'main/search_subject.html', {
+            'subject_list': qs,
+        })
+
+
+    return render(request, 'main/search_subject.html', {
+    })
+
+def about(request):
+    return render(request, 'main/about.html',{
+
+    })
+
+def class_rec_ver2(request):
+    data = None
+    real_subjects = []
+    subjects_id = []
+    subjects = Subject.objects.all().order_by('subj_name')
+
+    ###########################
+    user = User.objects.get(userid=request.session['userid'])
+    keyword_list = SubjectKeyword.objects.all()
+    if request.method == 'POST':
+        user_keyword = UserKeyword.objects.filter(user_id=user.id)
+        search = dict(json.loads(request.body.decode("utf-8")).items())
+        print(search['keyword_list'])
+        if user_keyword:
+            for keyword in user_keyword: 
+                if keyword.keyword in search['keyword_list']:
+                    keyword.flag = 1
+                    keyword.save()
+                else:
+                    keyword.flag = 0
+                    keyword.save()
+        else:
+            subject_keyword = SubjectKeyword.objects.all()
+            for keyword in subject_keyword:
+                if keyword.keyword in search['keyword_list']:
+                    flag = 1
+                else:
+                    flag = 0
+                user_keyword = UserKeyword.objects.create(
+                    user_id = user.id,
+                    keyword_id = keyword.keyword_id,
+                    keyword = keyword.keyword,
+                    flag = flag
+                )
+                user_keyword.save()
+        menu = int(search['menu0'])
+
+            
+    return render(request, 'main/class_rec_ver2.html',{
+        'user': user,
+        'keyword_list': keyword_list,
+    })
+
+def my_class_ver2(request):
+    user = User.objects.get(userid=request.session['userid'])
+    user_subject_list = UserSubject.objects.filter(user_id=user.id)
+    wish_list = WishList.objects.filter(user_id=user.id)
+    pre_lec_list = []
+    save_lec_list = []
+    for user_subject in user_subject_list:
+        pre_lec_list.append(Subject.objects.get(subj_id=user_subject.subj_id))
+    for lec in wish_list:
+        save_lec_list.append(Subject.objects.get(subj_id=lec.subj_id))
+    return render(request, 'main/my_class_ver2.html',{
+        'user': user,
+        'pre_lec_list': pre_lec_list,
+        'save_lec_list': save_lec_list,
+    })
+
+def pre_lec_ver2(request):
+    user = User.objects.get(userid=request.session['userid'])
+    user_subject_list = UserSubject.objects.filter(user_id=user.id)
+    subject_list = Subject.objects.all()
+    keyword_list = SubjectKeyword.objects.all()
+    q = ''
+    if request.method == 'GET':
+        q = request.GET.get('q', '')
+        if q:
+            qs = subject_list.filter(subj_name__icontains=q)
+            for user_subject in user_subject_list:
+                qs = qs.exclude(subj_id=user_subject.subj_id)
+        else:
+            qs = None
+    elif request.method == 'POST':
+        pre_lec = dict(json.loads(request.body.decode("utf-8")).items())
+        user_id = User.objects.get(userid=request.session['userid']).id
+        subj_id = Subject.objects.get(subj_name=pre_lec['subject']).subj_id
+        good = int(pre_lec['good'])
+        rating = float(pre_lec['rating'])
+        user_subject_new = UserSubject(user_id=user_id, subj_id=subj_id, good=good, rating=rating)
+        print(user_subject_new.__dict__)
+        user_subject_new.save()
+        q = pre_lec['search']
+        if q:
+            qs = subject_list.filter(subj_name__icontains=q)
+            for user_subject in user_subject_list:
+                qs = qs.exclude(subj_id=user_subject.subj_id)
+        else:
+            qs = None
+
+    return render(request, 'main/pre_lec_ver2.html',{
+        'user': user,
+        'search': q,
+        'subject_list': qs,
+        'keyword_list': keyword_list,
+    })
+
+
+def pre_lec_delete(request):
+    if request.method == 'POST':
+        pre_lec = dict(json.loads(request.body.decode("utf-8")).items())
+        subj_id = pre_lec['subj_id']
+        user = User.objects.get(userid=request.session['userid'])
+        user_subject = UserSubject.objects.get(user_id=user.id, subj_id=subj_id)
+        user_subject.delete()
+        return HttpResponseRedirect(reverse('main:my_class_ver2'))
+
+def save_lec_delete(request):
+    if request.method == 'POST':
+        save_lec = dict(json.loads(request.body.decode("utf-8")).items())
+        subj_id = save_lec['subj_id']
+        user = User.objects.get(userid=request.session['userid'])
+        wish_list = WishList.objects.get(user_id=user.id, subj_id=subj_id)
+        wish_list.delete()
+        return HttpResponseRedirect(reverse('main:my_class_ver2'))

@@ -1,0 +1,267 @@
+{% load static %}
+<html>
+    <head>
+        <title>COSMIC [class recommender system] Recommender</title>
+        <LINK HREF="{% static 'main/css/ClassRecVer2.css' %}" rel="stylesheet" />
+        <script src="{% static 'main/js/ClassRecVer2.js'%}" ></script>
+        <script src="{% static 'main/js/jquery-3.5.1.min.js'%}"></script>
+        <script src="{% static 'main/js/jquery.csrf.js'%}"></script>
+    </head>
+    <body>
+        <div class="all"> 
+            <div class="menu_bar">
+                <div class="profile">
+                    <div class="profile_logo">
+                        <img src="{% static 'main/img/main_logo.png' %}" width="40px" height='40px' >
+                    </div>
+                    <div class="profile_name">
+                        <span style="font-size: 15px; font-weight: bold; ">{{ user.username }}</span><br>
+                        <span style="font-size: 10px; font-weight: bold; opacity: 50; ">{{ user.user_number }}</span>
+                    </div>
+                </div>
+        
+                <ul class="menu_list" >
+                    <li class="menu_button" >
+                        <A href="{% url 'main:pre_lec_ver2' %}" >
+                            <img src="{% static 'main/img/들었던강의.png' %}" width="200" height='40' >
+                        </A>
+                    </li>
+                    <li class="menu_button_thisPage">
+                        <A href="{% url 'main:class_rec_ver2' %}"  >
+                            <img src="{% static 'main/img/recommender.png' %}" width="200" height='40' >
+                        </A>
+                    </li>
+                    <li class="menu_button">
+                        <A href="{% url 'main:my_class_ver2' %}" >
+                            <img src="{% static 'main/img/my_class.png' %}" width="200" height='40' >
+                        </A>
+                    </li>   
+                </ul>
+        
+            </div>}
+
+            <div class="container" >
+                <div class="page_title">
+                    <span style="font-size: 55px; font-weight: bold; ">Recommender</span>
+                </div>
+                <div class="content_container">
+                    <div class="setting_container">
+                        <div class="setting_title">
+                            <span style="font-size: 35px; font-weight: bold; ">Setting</span>
+                        </div>
+                        <div class="mbti_window">
+                            <span style="font-size: 25px; font-weight: bold; ">MBTI</span>
+                            <select name='mbti' class="mbtiSelect" onchange="changeMbti()">      
+                                <option value='INTJ'>INTJ</option>
+                                <option value='INTP'>INTP</option>
+                                <option value='INFJ'>INFJ</option>
+                                <option value='INFP'>INFP</option>
+                                <option value='ISTJ'>ISTJ</option>
+                                <option value='ISTP'>ISTP</option>
+                                <option value='ISFJ'>ISFJ</option>
+                                <option value='ISFP'>ISFP</option>
+                                <option value='ENTJ'>ENTJ</option>
+                                <option value='ENTP'>ENTP</option>
+                                <option value='ENFJ'>ENFJ</option>
+                                <option value='ENFP'>ENFP</option>
+                                <option value='ESTJ'>ESTJ</option>
+                                <option value='ESTP'>ESTP</option>
+                                <option value='ESFJ'>ESFJ</option>
+                                <option value='ESFP'>ESFP</option>
+                            </select>
+                            <br>
+                            <div class="mbtiframe" id="mbtiframeRed"> 
+                                <div class="mymbti" style="font-size: 25px; font-weight: bold; position: relative; text-align: center;">INTJ</div>
+                                <!--<IMG SRC="INTJ.png" style="position: relative; left: 120px;" width="357" height='257'> -->
+                            </div>
+                        </div>
+                        <div class="keyword_window">
+                            <span style="font-size: 15px; font-weight: bold; ">이 수업의 키워드</span><br>
+                            <span style="font-size: 15px; font-weight: bold; opacity: 0.5; ">selected</span>
+                            <div class="selected_keyword_window">
+                                
+                            </div>
+                            <span style="font-size: 15px; font-weight: bold; opacity: 0.5; ">Unselected</span>
+                            <div class="unselected_keyword_window">
+                                {% for keyword in keyword_list %}
+                                    <div id='unselected_keyword' class="unselected_keyword_button">{{keyword.keyword}}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% csrf_token %}
+                    <div class="search_container">
+
+
+                        <div class="search_window" onclick="showPopup()">
+                            <div class="search_title" >
+                                <span style="font-size: 30px; font-weight: bold; ">Search</span>
+                            </div>
+                            <div class="classTypeFrame">
+                            </div>
+                        </div>
+                        <div class="class_window">
+                            <div id="popup" class="hide">
+                                <div class="content">
+                                    <div class="option_array">
+                                        <span style="font-size: 30px; font-weight: bold; color: #111051">강의 추천 기준을 선택하세요</span>
+                                        <div class="optionlist">
+                                            <button class="search_option" id="search_option_0" value=0>키워드 중심</button>
+                                            <button class="search_option" id="search_option_1" value=1>성적 중심</button>
+                                            <button class="search_option" id="search_option_2" value=2>만족도 중심</button>
+                                        </div>
+                                    </div>
+                                    <div class="option_array2">
+                                        <div class="optionlist2">
+                                            <button class="search_option2" id="search_option2_0" value="일반교양">일반교양</button>
+                                            <button class="search_option2" id="search_option2_1" value="심화교양">심화교양</button>
+                                            <button class="search_option2" id="search_option2_2" value="확대교양">확대교양</button>
+                                        </div>
+                                    </div>
+                                    <div class="option_array3">
+                                        <div class="optionlist3">
+                                            <button class="search_option2" id="search_option2_0" value="인간과 문화">인간과 문화</button>
+                                            <button class="search_option2" id="search_option2_1" value="사회와 역사">사회와 역사</button>
+                                            <button class="search_option2" id="search_option2_2" value="자연과 과학">자연과 과학</button>
+                                        </div>
+                                    </div>
+                                  <button onclick="closePopup()" class="searchBt2">Search</button>
+                                </div>
+                              </div>
+                            <div class="class_basic_window">
+                                <div class="class_name_window">
+                                    <span style="font-size: 35px; font-weight: bold; ">일상생활의 심리학</span><br>
+                                    <span style="font-size: 20px; font-weight: bold; ">유성은 교수님</span><br>
+                                </div>
+                                <div class="class_keyword_window">
+                                    <div class="selected_keyword_show">조별과제</div>
+                                    <div class="selected_keyword_show">필기 중요</div>
+                                    <div class="unselected_keyword_show">매주 리포트</div>
+                                    <div class="unselected_keyword_show">수업시간 엄수</div>  
+                                </div>
+                                <div class="class_button_window">
+                                    <div class="plus_button">
+                                        <img src="{% static 'main/img/plus.png'%}" width="15" height="15">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="class_more_window">
+                                <div class="more_info" id="more_info_" style="display: none;">
+                                    <div class="more_info_window">
+                                        <div class="info_Table" >
+                                            <br>
+                                            <table width ="300" height="30">
+                                                <tr>
+                                                    <td>강의시간</td>
+                                                    <td>{{ subject.time }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>강의실</td>
+                                                    <td>{{ subject.room }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="scoreRatio" >
+                                            <span style="font-size: 17px; font-weight: bold;"> 평가방법 </span>
+                                            <table width ="400" height="10">
+                                                <tr>
+                                                    <td>중간고사</td>
+                                                    <td>
+                                                        <div class="midEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>기말고사</td>
+                                                    <td>
+                                                        <div class="finalEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>출석</td>
+                                                    <td>
+                                                        <div class="attend" style="width: calc(500px * 0.2);"> 20%</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>   
+                                </div>
+                                <div class="more_button" onclick="moreshow()" >
+                                    <span style="font-size: 12px; font-weight: bold; "> 더보기</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                      
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </body>
+</html>
+
+<script>
+    var option = {};
+    $(document).ready(function () {
+        $(document).on("click", "#unselected_keyword", function () {
+            var keyword = $(this).text();
+            $(this).fadeOut();
+            $('.selected_keyword_window').append("<div id='selected_keyword' class='selected_keyword_button'>" + keyword + "</div>" );
+        });
+    });
+
+    $(document).ready(function () {
+        $(document).on("click", "#selected_keyword", function () {
+            var keyword = $(this).detach();
+            $('.unselected_keyword_window').append("<div id='unselected_keyword' class='unselected_keyword_button'>" + keyword.text() + "</div>" );
+        });
+    });
+
+    $(document).ready(function () {
+        $(document).on("click", ".searchBt2", function () {
+            var search = {};
+            var keyword_list = [];
+            var keywords = $('.selected_keyword_window').children('#selected_keyword');
+            for(var i=0;i<keywords.length;i++){
+                keyword_list = keyword_list.concat(keywords[i].textContent);
+            }
+            alert(option[0]);
+            search['keyword_list'] = keyword_list;
+            $.ajax({
+                url:"{% url 'main:class_rec_ver2' %}",
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(search),
+                dataType:'text',
+                success:function(result){
+                    alert("success!");
+                }
+            })
+        })
+
+        $(document).on("click", ".search_option", function () {
+            alert($(this).val());
+            option[0] = $(this).val();
+        })
+        
+    });
+function showPopup(multipleFilter) {
+	const popup = document.querySelector('#popup');
+  
+  if (multipleFilter) {
+  	popup.classList.add('multiple-filter');
+  } else {
+  	popup.classList.remove('multiple-filter');
+  }
+  
+  popup.classList.remove('hide');
+}
+
+function closePopup() {
+	const popup = document.querySelector('#popup');
+  popup.classList.add('hide');
+}
+
+</script>
+

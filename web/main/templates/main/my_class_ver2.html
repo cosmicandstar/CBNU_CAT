@@ -1,0 +1,127 @@
+{% load static %}
+<html>
+    <head>
+        <title>COSMIC [class recommender system] My class</title>
+        <LINK HREF="{% static 'main/css/my_classVer2.css' %}" rel="stylesheet" />
+        <script src="{% static 'main/js/PreLecVer2.js' %}" ></script>
+        <script src="{% static 'main/js/jquery-3.5.1.min.js'%}"></script>
+        <script src="{% static 'main/js/jquery.csrf.js'%}"></script>
+    </head>
+    <body>
+        <div class="all"> 
+            <div class="menu_bar">
+                <div class="profile">
+                    <div class="profile_logo">
+                        <img src="{% static 'main/img/main_logo.png' %}" width="40px" height='40px' >
+                    </div>
+                    <div class="profile_name">
+                        <span style="font-size: 15px; font-weight: bold; ">{{ user.username }}</span><br>
+                        <span style="font-size: 10px; font-weight: bold; opacity: 50; ">{{ user.user_number }}</span>
+                    </div>
+                </div>
+        
+                <ul class="menu_list" >
+                    <li class="menu_button" >
+                        <A href="{% url 'main:pre_lec_ver2' %}" >
+                            <img src="{% static 'main/img/들었던강의.png' %}" width="200" height='40' >
+                        </A>
+                    </li>
+                    <li class="menu_button">
+                        <A href="{% url 'main:class_rec_ver2' %}"  >
+                            <img src="{% static 'main/img/recommender.png' %}" width="200" height='40' >
+                        </A>
+                    </li>
+                    <li class="menu_button_thisPage">
+                        <A href="{% url 'main:my_class_ver2' %}" >
+                            <img src="{% static 'main/img/my_class.png' %}" width="200" height='40' >
+                        </A>
+                    </li>   
+                </ul>
+        
+            </div>
+
+            <div class="container" >
+                <div class="page_title">
+                    <span style="font-size: 50px; font-weight: 900; ">My class</span>
+                </div>
+                <div class="content_container">
+                    <div class="Pre_lecture_container">
+                        <div class="Pre_lecture_title">
+                            <span style="font-size: 25px; font-weight: bold; "> 들었던 강의</span>
+                        </div>
+                        {% csrf_token %}
+                        {% for pre_lec in pre_lec_list %}
+                            <div class="class_window" id='{{ pre_lec.subj_id }}'>
+                                <div class="class_name_window">
+                                    <span style="font-size: 25px; font-weight: bold; ">{{ pre_lec.subj_name}}</span><br>
+                                    <span style="font-size: 15px; font-weight: bold; ">{{ pre_lec.prof_name}}</span><br>
+                                </div> 
+                                <div class="minus_button" id='pre_lec_minus_button' value='{{ pre_lec.subj_id }}'>
+                                    <img src="{% static 'main/img/minus.png'%}" width="15" height="15">
+                                </div>       
+                            </div>
+                        {% endfor %}
+                       
+                    </div>
+                    <div class="save_lecture_container">
+                        <div class="save_lecture_title">
+                            <span style="font-size: 25px; font-weight: bold; "> 찜한 강의</span>
+                        </div>
+                        {% csrf_token %}
+                        {% for save_lec in save_lec_list %}
+                            <div class="class_window" id='{{ save_lec.subj_id }}'>
+                                <div class="class_name_window">
+                                    <span style="font-size: 25px; font-weight: bold; ">{{ save_lec.subj_name}}</span><br>
+                                    <span style="font-size: 15px; font-weight: bold; ">{{ save_lec.prof_name}}</span><br>
+                                </div> 
+                                <div class="minus_button" id='save_lec_minus_button' value='{{ save_lec.subj_id }}'>
+                                    <img src="{% static 'main/img/minus.png'%}" width="15" height="15">
+                                </div>       
+                            </div>
+                        {% endfor %}
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        $(document).on("click", "#pre_lec_minus_button", function () {
+            var pre_lec = {};
+            pre_lec['subj_id'] = $(this).attr('value');
+            $.ajax({
+                url:"{% url 'main:pre_lec_delete' %}",
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(pre_lec),
+                dataType:'text',
+                success:function(result){
+                    alert("success!");
+                    location.reload();
+                }
+            })
+        });
+    });
+
+    $(document).ready(function () {
+        $(document).on("click", "#save_lec_minus_button", function () {
+            var save_lec = {};
+            save_lec['subj_id'] = $(this).attr('value');
+            $.ajax({
+                url:"{% url 'main:save_lec_delete' %}",
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(save_lec),
+                dataType:'text',
+                success:function(result){
+                    alert("success!");
+                    location.reload();
+                }
+            })
+        });
+    });
+</script>

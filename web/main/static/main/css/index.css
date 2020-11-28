@@ -1,29 +1,45 @@
 body{margin: 0;}
 a{color:black; text-decoration: none;}
-@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
-*{font-family: 'Noto Sans KR', sans-serif; font-size: 1.4rem}
+*{font-family: 'Noto Sans KR', sans-serif;}
 
-.base img{
-    margin: 5px 10px 0px;
-    margin-right: 40px;
-    height: 60px; width: 65px;
+.base .bg{
+    width: 100%;
+    position: absolute;
+    top:0%; left:0%;
+}
+
+.base .tt{
+    width: 50%;
+    position: absolute;
+    top:3%; left:3%;
 }
 
 .container{
-    font-size: 1.5rem;
-    margin: 50px auto;
+    font-size: 2.5rem;
+    margin-top: 100px;
     text-align: center;
 }
 
-.header a{
-        border-radius: 40px;
-        background-color: #5007EF;
-        border: 1px solid #5007EF;
-        width: 150px;
-        padding:3px; margin: 10px auto;
-        color: #FFFFFF;
-        position: absolute;
-        top:62%; left:50%;
-        transform: translate(-50%, -50%);
+.header .log{
+    border-radius: 40px;
+    background-color: None;
+    border: 2px solid #FFFFFF;
+    width: 250px;
+    padding:3px; margin: 10px auto;
+    color: #FFFFFF;
+    position: absolute;
+    top:72%; left:50%;
+    transform: translate(-50%, -50%);
 }
 
+.header .ab{
+    border-radius: 40px;
+    background-color: None;
+    border: 2px solid #FFFFFF;
+    width: 250px;
+    padding:3px; margin: 10px auto;
+    color: #FFFFFF;
+    position: absolute;
+    top:80%; left:50%;
+    transform: translate(-50%, -50%);
+}
