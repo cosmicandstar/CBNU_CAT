@@ -106,26 +106,29 @@
                                     <div class="option_array">
                                         <span style="font-size: 30px; font-weight: bold; color: #111051">강의 추천 기준을 선택하세요</span>
                                         <div class="optionlist">
-                                            <button class="search_option" id="search_option_0" value=0>키워드 중심</button>
-                                            <button class="search_option" id="search_option_1" value=1>성적 중심</button>
-                                            <button class="search_option" id="search_option_2" value=2>만족도 중심</button>
+                                            <button class="search_option" id="search_option_0" value=0>키워드 기반</button>
+                                            <button class="search_option" id="search_option_1" value=1>성적 기반</button>
+                                            <button class="search_option" id="search_option_2" value=2>만족도 기반</button>
                                         </div>
                                     </div>
                                     <div class="option_array2">
                                         <div class="optionlist2">
-                                            <button class="search_option2" id="search_option2_0" value="일반교양">일반교양</button>
-                                            <button class="search_option2" id="search_option2_1" value="심화교양">심화교양</button>
-                                            <button class="search_option2" id="search_option2_2" value="확대교양">확대교양</button>
+                                            <button class="search_option2" id="search_option2_0" value="0">전체</button>
+                                            <button class="search_option2" id="search_option2_0" value="1">일반교양</button>
+                                            <button class="search_option2" id="search_option2_1" value="2">심화교양</button>
+                                            <button class="search_option2" id="search_option2_2" value="3">확대교양</button>
                                         </div>
                                     </div>
                                     <div class="option_array3">
                                         <div class="optionlist3">
-                                            <button class="search_option2" id="search_option2_0" value="인간과 문화">인간과 문화</button>
-                                            <button class="search_option2" id="search_option2_1" value="사회와 역사">사회와 역사</button>
-                                            <button class="search_option2" id="search_option2_2" value="자연과 과학">자연과 과학</button>
+                                            <button class="search_option3" id="0" value="0">전체</button>
+                                            <button class="search_option3" id="1" value="1">인간과 문화</button>
+                                            <button class="search_option3" id="2" value="2">사회와 역사</button>
+                                            <button class="search_option3" id="3" value="3">자연과 과학</button>
+                                            <!-- <button class="search_option3" id="search_option4" value="4">기술과 문명</button> -->
                                         </div>
                                     </div>
-                                  <button onclick="closePopup()" class="searchBt2">Search</button>
+                                  <div onclick="closePopup()" class="searchBt2">Search</div>
                                 </div>
                               </div>
                             <div class="class_basic_window">
@@ -202,7 +205,7 @@
 </html>
 
 <script>
-    var option = {};
+    var option = [0,0,0];
     $(document).ready(function () {
         $(document).on("click", "#unselected_keyword", function () {
             var keyword = $(this).text();
@@ -226,7 +229,8 @@
             for(var i=0;i<keywords.length;i++){
                 keyword_list = keyword_list.concat(keywords[i].textContent);
             }
-            alert(option[0]);
+            alert(option[0]+option[1]+option[2]);
+            // e.g.) 010 : 키워드/ 일반교양/전체
             search['keyword_list'] = keyword_list;
             $.ajax({
                 url:"{% url 'main:class_rec_ver2' %}",
@@ -239,12 +243,50 @@
                 }
             })
         })
-
+        
         $(document).on("click", ".search_option", function () {
-            alert($(this).val());
-            option[0] = $(this).val();
+            if(option[0]!=$(this).val()){
+                $('.search_option').css("background-color","#111051")
+                $('.search_option').css("color","#fff")
+                
+            }
+            $(this).css("background-color", "#fff");
+            $(this).css("color","#111051")
+            option[0] = $(this).val()
         })
         
+        $(document).on("click", ".search_option2", function () {
+            if($(this).val()!=option[1]){
+                var list_option3;
+                $(".search_option3").remove();
+                if($(this).val()==1){
+                    list_option3 = ["전체","인간과 문화","사회와 역사", "자연과 과학"];
+                }
+                else if($(this).val()==2){
+                    list_option3 = ["전체","미래융복합","국제화", "진로와취업","예술과체육"];
+                }
+                else if($(this).val()==3){
+                    list_option3 = ["전체","문학과문화","역사와철학", "자연과생명","기술과문명"];
+                }
+                for (var i in list_option3){
+                        $(".optionlist3").append("<button class='search_option3' id='"+i+"' value='"+i+"'>"+list_option3[i]+"</button>");
+                    }
+                $('.search_option2').css("background-color","#4a4985")
+                $('.search_option2').css("color","#fff")
+                }
+            $(this).css("background-color", "#fff");
+            $(this).css("color","#4a4985")
+            option[1] = $(this).val()
+        })
+        $(document).on("click", ".search_option3", function () {
+            if(option[2]!=$(this).val()){
+                $('.search_option3').css("background-color","#8a8aad")
+                $('.search_option3').css("color","#fff")
+            }
+            $(this).css("background-color", "#fff");
+            $(this).css("color","#8a8aad")
+            option[2] = $(this).val()
+        })
     });
 function showPopup(multipleFilter) {
 	const popup = document.querySelector('#popup');

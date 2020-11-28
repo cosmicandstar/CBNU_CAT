@@ -16,8 +16,6 @@ html,body{
 
 /*__________________________________________________*/
 
-
-
 .menu_bar{
     z-index: 1;
     position: fixed;
@@ -77,10 +75,6 @@ html,body{
     opacity: 1;
     list-style: none;
 }
-
-
-
-
 
 
 .container{
@@ -150,7 +144,6 @@ html,body{
 
 
 .class_window{
-   
     margin: 0px 0px 0px 0px;
     padding: 0px 20px 0px 0px;
     background-color: #fdfdff; 

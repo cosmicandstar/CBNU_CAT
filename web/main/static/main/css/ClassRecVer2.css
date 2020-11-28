@@ -358,6 +358,26 @@ html,body{
     transition: 0.3s;
 }
 
+.searchBt2 {
+   background-image: linear-gradient(to right, #5f2c82 0%, #49a09d  51%, #5f2c82  100%);
+   margin: 10px;
+   width: 200px;
+   height: 40px;
+   padding: 2px 45px;
+   text-align: center;
+   text-transform: uppercase;
+   transition: 0.5s;
+   background-size: 200% auto;
+   color: white;           
+   border-radius: 10px;
+   display: block;
+ }
+
+ .searchBt2:hover {
+   background-position: right center; /* change the direction of the change here */
+   color: #fff;
+   text-decoration: none;
+ }
 
 .classTypeSelect2:hover, .classTypeSelect1:hover{
     opacity: 0.9;
@@ -523,6 +543,7 @@ button {
     background: #fff;
     border-radius: 5px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+    text-align: center;
   }
 
 .option_array{
@@ -549,9 +570,10 @@ button {
     flex-direction: column;
     text-align: center;
 }
+
 .option_array3{
     width: 800px;
-    height: 100px;
+    height: 80px;
     margin: 10px 0px 0px 0px;
     padding-top: 5px;
     background-color: #fdfdff;
@@ -570,8 +592,6 @@ button {
     padding: 0px 0px 0px 0px;
     margin: 15px 0px 0px 15px;
     align-content: center;
-    justify-content: space-between;
-    flex-direction: row;
 }
 .optionlist2{
     display: flex;
@@ -582,20 +602,17 @@ button {
     padding: 0px 0px 0px 0px;
     margin: 5px 0px 0px 15px;
     align-content: center;
-    justify-content: space-between;
-    flex-direction: row;
 }
 .optionlist3{
     display: flex;
     flex-direction: row;
-    width: 720px;
+    width: 690px;
     align-content: center;
     justify-content: space-between;
     padding: 0px 0px 0px 0px;
-    margin: 5px 0px 0px 15px;
+    /* margin: 5px 0px 0px 15px; */
+    margin: 0 auto;
     align-content: center;
-    justify-content: space-between;
-    flex-direction: row;
 }
 
 .search_option{
@@ -615,6 +632,24 @@ button {
     text-align: center;
 }
 
+@keyframes option_btn {
+    0%{background-position:0% 20%;
+    color: rgb(255, 255, 255)}
+    100%{background-position:100% 50%;
+        color:#111051;}
+}
+@keyframes option_btn2 {
+    0%{background-position:0% 20%;
+    color: rgb(255, 255, 255)}
+    100%{background-position:100% 50%;
+        color:#4a4985;}
+}
+@keyframes option_btn3{
+    0%{background-position:0% 20%;
+    color: rgb(255, 255, 255)}
+    100%{background-position:100% 50%;
+        color:#8a8aad;}
+}
 .search_option:hover{
     display: inline-block;
     height: 90px;
@@ -623,10 +658,12 @@ button {
     border-width: 1.5px;
     border-style: solid;
     border-color: #111051;
-    background-color:#fff;
+    background: linear-gradient(270deg,#ffffff,#ffffff,#111051,#111051 );
+    background-size: 400% 400%;
+    animation: option_btn 1s;
+    animation-fill-mode: forwards;
     margin: 10px 0px 0px 50px;
     padding: 20px 15px 50px 15px;
-    color: #111051;
     transition: 0.3s;
     font-size: 2.1rem;
     font-weight: bold;
@@ -645,7 +682,7 @@ button {
     padding: 20px 15px 30px 15px;
     color: #fff;
     transition: 0.3s;
-    font-size: 1.9rem;
+    font-size: 1.5rem;
     text-align: center;
 }
 
@@ -657,12 +694,50 @@ button {
     border-width: 1.5px;
     border-style: solid;
     border-color:#4a4985;
-    background-color:#fff;
+    background: linear-gradient(270deg,#ffffff,#ffffff,#4a4985,#4a4985 );
+    background-size: 400% 400%;
+    animation: option_btn2 1s;
+    animation-fill-mode: forwards;
     margin: 10px 0px 0px 50px;
     padding: 15px 15px 30px 15px;
-    color:#4a4985;
     transition: 0.1s;
-    font-size: 2.1rem;
+    font-size: 1.7rem;
+    font-weight: bold;
+    text-align: center;
+}
+.search_option3{
+    display: inline-block;
+    height: 50px;
+    width: 120px;
+    border-radius: 15px;
+    border-width: 1.5px;
+    border-style: solid;
+    border-color:#8a8aad;
+    background-color:#8a8aad;
+    margin: 15px 5px 5px 5px;
+    padding: 5px 5px 10px 5px;
+    color: #fff;
+    transition: 0.3s;
+    font-size: 1.0rem;
+    text-align: center;
+}
+
+.search_option3:hover{
+    display: inline-block;
+    height: 50px;
+    width: 140px;
+    border-radius: 15px;
+    border-width: 1.5px;
+    border-style: solid;
+    border-color:#8a8aad;
+    background: linear-gradient(270deg,#ffffff,#ffffff,#8a8aad,#8a8aad );
+    background-size: 400% 400%;
+    animation: option_btn3 1s;
+    animation-fill-mode: forwards;
+    margin: 15px 5px 5px 5px;
+    padding: 2px 5px 10px 5px;
+    transition: 0.1s;
+    font-size: 1.1rem;
     font-weight: bold;
     text-align: center;
 }
@@ -671,3 +746,4 @@ button {
     cursor: pointer;
     text-decoration: none;
 }
+
