@@ -720,7 +720,7 @@ button {
     margin: 20px 0px 20px 0px;
     width: 60px;
     height: 40px;
-    padding: 2px 20px;
+    padding: 6px 20px;
     text-align: center;
     text-transform: uppercase;
     transition: 0.5s;
@@ -729,7 +729,7 @@ button {
     border-radius: 10px;
     display: flex;
     justify-content: center;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
  
   .searchBt2:hover {

@@ -40,7 +40,6 @@
                         </A>
                     </li>   
                 </ul>
-        
             </div>
 
             <div class="container" >
@@ -113,7 +112,6 @@
                                 
                             <div id="popup" class="hide">
                                 <div class="content">
-                                    <div onclick="closePopup(false)" class="searchBt2">X</div>
                                     <div class="option_array">
                                         <span style="font-size: 30px; font-weight: bold; color: #111051">강의 추천 기준을 선택하세요</span>
                                         <div class="optionlist">
@@ -153,7 +151,7 @@
                                 <div class="class_basic_window">
                                     <div class="class_name_window">
                                         <span style="font-size: 2.25rem; font-weight: bold; ">{{subject.subj_name}}</span><br>
-                                        <span style="font-size: 2rem; font-weight: bold; ">{{subject.prof_name}}</span>
+                                        <span style="font-size: 1.8rem; font-weight: bold; ">{{subject.prof_name}}</span>
                                         <div class="class_keyword_window">
                                             {% for keyword in keywords %}
                                                 {% if keyword in keyword_name_list %}
@@ -355,4 +353,8 @@
         popup.classList.add('hide');
     }
 
+    $(document).click(function(e){ //문서 body를 클릭했을때
+ 		if(e.target.className =="share-pop"){return false} //내가 클릭한 요소(target)를 기준으로 상위요소에 .share-pop이 없으면 (갯수가 0이라면)
+ 		$(".share-pop").stop().fadeOut(500);
+ });
 </script>

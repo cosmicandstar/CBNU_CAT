@@ -6,6 +6,7 @@ a{color:black; text-decoration: none;}
     width: 100%;
     position: absolute;
     top:0%; left:0%;
+    filter: brightness(50%);
 }
 
 .base .tt{
@@ -25,7 +26,7 @@ a{color:black; text-decoration: none;}
     background-color: None;
     border: 2px solid #FFFFFF;
     width: 250px;
-    padding:3px; margin: 10px auto;
+    padding:3px; margin: 3px auto;
     color: #FFFFFF;
     position: absolute;
     top:72%; left:50%;
