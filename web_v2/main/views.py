@@ -11,11 +11,19 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.urls import reverse
 from django.core.paginator import Paginator
 import json
-import time
-
 from . import apps
 from .models import *
+'''import tensorflow as tf
+from tensorflow.keras import layers
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, Embedding, Dot, Add, Flatten
+from tensorflow.keras.layers import Dense, Concatenate, Activation
+from tensorflow.keras.regularizers import l2
+from tensorflow.keras.optimizers import SGD, Adamax'''
 
+
+model = None
+mu = 0
 
 # Create your views here.
 def index(request):
@@ -31,11 +39,29 @@ def login(request):
 
 
 def sign_in(request):
+    global model, mu
     user_id = request.POST['user_id']
     user_pw = request.POST['user_pw']
     try:
         user = User.objects.get(userid=user_id, password=user_pw)
         request.session['userid'] = user_id
+        '''if model is None: # 로그인 했을 때 모델이 비어있으면
+            try:
+                goods = list(UserSubject.objects.values_list('user_id', 'subj_id', 'good'))
+                goods = [list(x) for x in goods]
+                mbti = list(User.objects.values_list('id', 'mbti'))
+                mbti = [list((x[0], int(x[1]))) for x in mbti]
+
+                goods = pd.DataFrame(goods, columns=["id", "lecture", "rating"])
+                mbti = pd.DataFrame(mbti, columns=["id", "mbti"])
+
+                print(goods)
+                print(mbti)
+
+                mu = goods.rating.mean()  # 학습 데이터 평균
+                cat_NeuralMF_begin(goods, mbti, 200)
+            except Exception as ex:
+                print(ex)'''
         return HttpResponseRedirect(reverse('main:class_rec_ver2'))
     except User.DoesNotExist:
         return HttpResponse('실패')
@@ -95,8 +121,9 @@ def myinfo(request):
                 user_keyword = get_list_or_404(UserKeyword, user_id=user.id)
         except:
             pass
-        return render(request, 'main/class_lec_ver2.html', {'user': get_object_or_404(User, userid=request.session['userid']),
-                                                    'user_keywords': user_keyword})
+        return render(request, 'main/class_lec_ver2.html',
+                      {'user': get_object_or_404(User, userid=request.session['userid']),
+                       'user_keywords': user_keyword})
     except KeyError:
         return HttpResponseRedirect(reverse('main:index'))
 
@@ -124,13 +151,12 @@ def keyword(request):
                 user_keyword.flag = 0
             user_keyword.save()
             return JsonResponse({
-        'success' : True,} , json_dumps_params = {'ensure_ascii': True})
-            #return HttpResponseRedirect(reverse('main:class_rec_ver2'))
+                'success': True, }, json_dumps_params={'ensure_ascii': True})
+            # return HttpResponseRedirect(reverse('main:class_rec_ver2'))
     except KeyError:
         return JsonResponse({
             'success': False, }, json_dumps_params={'ensure_ascii': True})
-        #return HttpResponseRedirect(reverse('main:class_rec_ver2'))
-
+        # return HttpResponseRedirect(reverse('main:class_rec_ver2'))
 
 
 def pre_lec(data):
@@ -143,7 +169,6 @@ def pre_lec(data):
 
 
 def keyword_sort(user_keyword, lecture_bin):
-
     user_keyword = user_keyword.set_index("keyword")
     user_keyword_list = list(user_keyword.iloc[:, 0])
     check = lecture_bin * user_keyword_list
@@ -168,13 +193,12 @@ def total_sim(like_data, wish_data, score_data, lecture_data, alpha):
     lecture_list = lecture_wide.sort_values(axis=0, ascending=True, by="id").index
     # 혹시 몰라서 정렬함.
 
-
     like_wide = pre(like_in)
     score_wide = pre(score_in)
 
     like_sim = sim(like_wide, lecture_list)
     score_sim = sim(score_wide, lecture_list)
-    #print(score_sim)
+    # print(score_sim)
     lecture_sim = sim_lecture(lecture_wide, lecture_list)
 
     ts = like_sim * alpha[0] + score_sim * alpha[1] + lecture_sim * alpha[3]
@@ -342,7 +366,7 @@ def classrec(request):
         recommend_subjects = []
         # 모델 연결 후 정렬 다시
         try:
-        #if(True):
+            # if(True):
             menu4 = int(data['menu4'])
             if menu4 != 0:
                 # 데이터 불러오기
@@ -362,7 +386,8 @@ def classrec(request):
                 wish = [list(x) for x in wish]
 
                 lecture = list(SubjectKeywords.objects.values_list('subj_id', 'keyword_id', 'value'))
-                lecture = [list((x[0], x[1], 1)) if x[2] > 1 else list(x) for x in lecture] #  if subjects_id.count(x[0]) > 0
+                lecture = [list((x[0], x[1], 1)) if x[2] > 1 else list(x) for x in
+                           lecture]  # if subjects_id.count(x[0]) > 0
 
                 alpha = [0.7, 0.4, 0.4, 0.1]
 
@@ -374,12 +399,12 @@ def classrec(request):
                 recommend_ = recommend(ts, user)
 
                 if menu4 == 3:
-                    #print("야호랑이똥개")
-                    #print(lecture)
-                    user_keywords_wide = pd.DataFrame(user_keywords, columns=["keyword","key"])
+                    # print("야호랑이똥개")
+                    # print(lecture)
+                    user_keywords_wide = pd.DataFrame(user_keywords, columns=["keyword", "key"])
                     lecture_temp = pd.DataFrame(lecture, columns=["id", "keyword", "value"])
                     print(pre_lec(lecture_temp))
-                    recommend_ = keyword_sort(user_keywords_wide,pre_lec(lecture_temp))
+                    recommend_ = keyword_sort(user_keywords_wide, pre_lec(lecture_temp))
                     print(recommend_)
 
                 for i in recommend_:
@@ -430,11 +455,11 @@ def classrec(request):
         keywords = SubjectKeyword.objects.all()
 
         return render(request, 'main/class_rec_ver2.html', {
-        'subjects': real_subjects, 
-        'user': get_object_or_404(User, userid=request.session['userid']), 
-        'get': data, 
-        'page_obj': page_obj, 
-        'keywords': keywords,
+            'subjects': real_subjects,
+            'user': get_object_or_404(User, userid=request.session['userid']),
+            'get': data,
+            'page_obj': page_obj,
+            'keywords': keywords,
         })
 
     except KeyError:
@@ -479,7 +504,7 @@ def profile_upload(request):
         csv_file = request.FILES['file2']
         data_set = csv_file.read().decode('UTF-8')
         io_string = io.StringIO(data_set)
-        next(io_string) 
+        next(io_string)
         SubjectKeyword.objects.all().delete()
         for column in csv.reader(io_string, delimiter=','):
             _, created = SubjectKeyword.objects.update_or_create(
@@ -506,6 +531,7 @@ def profile_upload(request):
         pass
 
     return render(request, template)
+
 
 def myclass(request):
     try:
@@ -556,8 +582,9 @@ def myclass(request):
             except:
                 real_subjects.append(subject)
 
-
-        return render(request, 'main/my_class_ver2.html', {'wishlist': real_wish_subjects, 'usersubjlist': real_subjects, 'user': get_object_or_404(User, userid=request.session['userid'])})
+        return render(request, 'main/my_class_ver2.html',
+                      {'wishlist': real_wish_subjects, 'usersubjlist': real_subjects,
+                       'user': get_object_or_404(User, userid=request.session['userid'])})
     except KeyError:
         return HttpResponseRedirect(reverse('index'))
 
@@ -638,21 +665,93 @@ def search_subject(request):
             'subject_list': qs,
         })
 
-
     return render(request, 'main/search_subject.html', {
     })
 
+
 def about(request):
-    return render(request, 'main/about.html',{
+    return render(request, 'main/about.html', {
 
     })
+
+
+def RMSE(y_true, y_pred):
+    return tf.sqrt(tf.reduce_mean(tf.square(y_true - y_pred)))
+
+def cat_NeuralMF_begin(ratings, mbti, lec_num):
+    global model
+    ratings = pd.merge(ratings, mbti, on='id')
+
+    L = 16
+    K = 20
+    mu = ratings.rating.mean()
+    M = 10001 + lec_num
+    N = 10001 + lec_num
+
+    user = Input(shape=(1,))
+    item = Input(shape=(1,))
+    P_embedding = Embedding(M, K, embeddings_regularizer=l2())(user)
+    Q_embedding = Embedding(N, K, embeddings_regularizer=l2())(item)
+    user_bias = Embedding(M, 1, embeddings_regularizer=l2())(user)
+    item_bias = Embedding(N, 1, embeddings_regularizer=l2())(item)
+
+    R = layers.dot([P_embedding, Q_embedding], axes=2)
+    R = layers.add([R, user_bias, item_bias])
+    R = Flatten()(R)
+
+    P_embedding = Flatten()(P_embedding)
+    Q_embedding = Flatten()(Q_embedding)
+    user_bias = Flatten()(user_bias)
+    item_bias = Flatten()(item_bias)
+    mbti = Input(shape=(1,))
+    mbti_embedding = Embedding(L, 5, embeddings_regularizer=l2())(mbti)
+    mbti_layer = Flatten()(mbti_embedding)
+
+    R = Concatenate()([P_embedding, Q_embedding, user_bias, item_bias, mbti_layer])
+    R = Dense(2048)(R)
+    R = Activation('linear')(R)
+    R = Dense(256)(R)
+    R = Activation('linear')(R)
+    R = Dense(1)(R)
+
+    model = Model(inputs=[user, item, mbti], outputs=R)
+    model.compile(
+        loss=RMSE,
+        optimizer=SGD(),
+        metrics=[RMSE]
+    )
+    #model.summary()
+
+    result = model.fit(
+        x=[ratings.id.values, ratings.lecture.values, ratings.mbti.values],
+        y=ratings.rating.values - mu,
+        epochs=80,
+        batch_size=1
+    )
+
+
+def predict(user_id, lec_num, mbti_num):
+    global model, mu
+    print(model)
+    user_ids = np.full((lec_num), user_id)
+    mbti_ids = np.full((lec_num), mbti_num)
+    item_ids = np.arange(10001, 10001 + lec_num)
+    # print(item_ids)
+
+    predictions = model.predict([user_ids, item_ids, mbti_ids]) + mu
+    temp = pd.DataFrame(item_ids, columns=['lec'])
+    temp['score'] = predictions
+    temp = temp.sort_values(by=['score'], axis=0, ascending=False)
+    print(temp)
+    return list(temp['lec'])
+
 
 def class_rec_ver2(request):
     user = User.objects.get(userid=request.session['userid'])
 
     subjects_id = []
     subjects = Subject.objects.all().order_by('subj_name')
-    try: # 찜목록 안뜨게
+    try:  # 찜목록 안뜨게
         wishlist = get_list_or_404(WishList, user_id=user.id)
         for wish in wishlist:
             subjects = subjects.exclude(subj_id=wish.subj_id)
@@ -695,19 +794,18 @@ def class_rec_ver2(request):
             li.append(SubjectKeyword.objects.get(keyword_id=k.keyword_id).keyword)
         subj_keyword_list.append(li)
     subj_and_keyword = list(zip(subjects, subj_keyword_list))
-    
 
     if request.method == 'GET':
-        print(request.GET.get('menu1',''))
+        print(request.GET.get('menu1', ''))
         if request.GET.get('menu1', '') == '':
             choice = 0
         else:
             choice = int(request.GET.get('menu1', ''))
         if request.GET.get('menu0', '') == '':
-             menu4 = 0
+            menu4 = 0
         else:
-             menu4 = int(request.GET.get('menu0', ''))
-       
+            menu4 = int(request.GET.get('menu0', ''))
+
         menu1_list = ['전체', '일반교양', '확대교양', '심화교양']
         menu2_1 = ['전체', '인간과문화', '사회와역사', '자연과과학']
         menu2_2 = ['전체', '미래융복합', '국제화', '진로와취업', '예술과체육']
@@ -729,7 +827,7 @@ def class_rec_ver2(request):
 
         for subject in subjects:
             subjects_id.append(subject.subj_id)
-            
+
         recommend_subjects = []
 
         try:
@@ -747,13 +845,16 @@ def class_rec_ver2(request):
                 goods = [list(x) for x in goods]
                 wish = list(WishList.objects.values_list('user_id', 'subj_id'))
                 wish = [list(x) for x in wish]
+                mbti = list(User.objects.values_list('id', 'mbti'))
+                mbti = [list(x) for x in mbti]
                 lecture = list(SubjectKeywords.objects.values_list('subj_id', 'keyword_id', 'value'))
-                lecture = [list((x[0], x[1], 1)) if x[2] > 1 else list(x) for x in lecture] #  if subjects_id.count(x[0]) > 0
+                lecture = [list((x[0], x[1], 1)) if x[2] > 1 else list(x) for x in
+                           lecture]  # if subjects_id.count(x[0]) > 0
 
                 # MF 모델
+                '''predict(15, 200, 0)
 
-                apps.model;
-
+                recommend_ = []'''
 
                 # 기존 모델
                 alpha = [0.7, 0.4, 0.4, 0.1]
@@ -762,16 +863,15 @@ def class_rec_ver2(request):
                     alpha.reverse()
                 ts, lecture_list = total_sim(goods, wish, ratings, lecture, alpha)
                 if menu4 == 3:
-                    #print(lecture)
-                    user_keywords_wide = pd.DataFrame(user_keywords, columns=["keyword","key"])
+                    # print(lecture)
+                    user_keywords_wide = pd.DataFrame(user_keywords, columns=["keyword", "key"])
                     lecture_temp = pd.DataFrame(lecture, columns=["id", "keyword", "value"])
                     print(pre_lec(lecture_temp))
-                    recommend_ = keyword_sort(user_keywords_wide,pre_lec(lecture_temp))
+                    recommend_ = keyword_sort(user_keywords_wide, pre_lec(lecture_temp))
                     print(recommend_)
                 else:
                     user = user_input(goods_single, lecture_list)
                     recommend_ = recommend(ts, user)
-
 
                 subj = Subject.objects.all()
                 if menu1 != '전체':
@@ -780,12 +880,13 @@ def class_rec_ver2(request):
                         subj = Subject.objects.filter(category2__contains=menu2).order_by('subj_name')
                 # 들었던 강의 제외
                 try:
-                    usersubjectlist = UserSubject.objects.filter(user_id=User.objects.get(userid=request.session['userid']).id)
+                    usersubjectlist = UserSubject.objects.filter(
+                        user_id=User.objects.get(userid=request.session['userid']).id)
                     for usersubject in usersubjectlist:
                         subj = subj.exclude(subj_id=usersubject.subj_id)
                 except:
                     pass
-                
+
                 subj_id_list = []
                 subj_keyword_list = []
                 for x in subj:
@@ -799,7 +900,7 @@ def class_rec_ver2(request):
                             li.append(SubjectKeyword.objects.get(keyword_id=k.keyword_id).keyword)
                         subj_keyword_list.append(li)
                         recommend_subjects.append(subj)
-                subj_and_keyword = list(zip(recommend_subjects, subj_keyword_list))                    
+                subj_and_keyword = list(zip(recommend_subjects, subj_keyword_list))
         except Exception as ex:
             print(ex.__str__())
             pass
@@ -821,7 +922,7 @@ def class_rec_ver2(request):
         user_keyword = UserKeyword.objects.filter(user_id=user.id)
         keyowrd = dict(json.loads(request.body.decode("utf-8")).items())
         if user_keyword:
-            for keyword in user_keyword: 
+            for keyword in user_keyword:
                 if keyword.keyword in keyowrd['keyword_list']:
                     keyword.flag = 1
                     keyword.save()
@@ -836,20 +937,20 @@ def class_rec_ver2(request):
                 else:
                     flag = 0
                 user_keyword = UserKeyword.objects.create(
-                    user_id = user.id,
-                    keyword_id = keyword.keyword_id,
-                    keyword = keyword.keyword,
-                    flag = flag
+                    user_id=user.id,
+                    keyword_id=keyword.keyword_id,
+                    keyword=keyword.keyword,
+                    flag=flag
                 )
                 user_keyword.save()
 
-
-    return render(request, 'main/class_rec_ver2.html',{
+    return render(request, 'main/class_rec_ver2.html', {
         'user': user,
         'keyword_name_list': keyword_name_list,
         'subj_and_keyword': subj_and_keyword,
         'user_keyword_list': user_keyword_list,
     })
+
 
 def my_class_ver2(request):
     user = User.objects.get(userid=request.session['userid'])
@@ -861,11 +962,12 @@ def my_class_ver2(request):
         pre_lec_list.append(Subject.objects.get(subj_id=user_subject.subj_id))
     for lec in wish_list:
         save_lec_list.append(Subject.objects.get(subj_id=lec.subj_id))
-    return render(request, 'main/my_class_ver2.html',{
+    return render(request, 'main/my_class_ver2.html', {
         'user': user,
         'pre_lec_list': pre_lec_list,
         'save_lec_list': save_lec_list,
     })
+
 
 def pre_lec_ver2(request):
     user = User.objects.get(userid=request.session['userid'])
@@ -906,7 +1008,7 @@ def pre_lec_ver2(request):
         else:
             qs = None
 
-    return render(request, 'main/pre_lec_ver2.html',{
+    return render(request, 'main/pre_lec_ver2.html', {
         'user': user,
         'search': q,
         'subject_list': qs,
@@ -922,6 +1024,7 @@ def pre_lec_delete(request):
         user_subject = UserSubject.objects.get(user_id=user.id, subj_id=subj_id)
         user_subject.delete()
         return HttpResponseRedirect(reverse('main:my_class_ver2'))
+
 
 def save_lec_delete(request):
     if request.method == 'POST':

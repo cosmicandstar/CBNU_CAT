@@ -18,6 +18,9 @@
                         <span style="font-size: 15px; font-weight: bold; ">{{ user.username }}</span><br>
                         <span style="font-size: 10px; font-weight: bold; opacity: 50; ">{{ user.user_number }}</span>
                     </div>
+                    <div class="logout">
+                        <a href="{% url 'main:logout' %}" >log out</a>
+                    </div>
                 </div>
         
                 <ul class="menu_list" >

@@ -59,6 +59,19 @@ html,body{
     padding: 0px 0px 0px 0px;
     /*background: #a3a2b6; */
 }
+.logout{
+    display: inline-block;
+    float: right;
+    text-align: center;
+    margin: 20px 10px;
+}
+.logout a {
+    text-decoration: none;
+    color: #111051;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 2px;
+}
 .menu_list{
     padding: 30px 0px 10px 0px
 }
