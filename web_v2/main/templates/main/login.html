@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main/css/login_style.css'%}">
+    <link href="fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+    <title>login</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="login_title">
+            Login
+        </div>
+        <img src="{% static 'main/img/cosmic_logo.png'%}">
+    </div>
+
+    <div class="login_container">
+        <form action="../signin/" method="POST">{% csrf_token %}
+            ID
+            <div>
+                <input type="text" name='user_id'>
+            </div>
+            PASSWORD
+            <div>
+                <input type="password" name='user_pw'>
+            </div>
+            <button type='submit' class="signin_button">Log in</button>
+        </form>
+    </div>
+
+    <div class="signup">
+    not a member? <a href="{% url 'main:signup' %}" class="sup">sign up</a>
+    </div>
+
+</body>
+</html>

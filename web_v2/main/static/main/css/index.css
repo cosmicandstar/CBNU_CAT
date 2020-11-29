@@ -1,0 +1,45 @@
+body{margin: 0;}
+a{color:black; text-decoration: none;}
+*{font-family: 'Noto Sans KR', sans-serif;}
+
+.base .bg{
+    width: 100%;
+    position: absolute;
+    top:0%; left:0%;
+}
+
+.base .tt{
+    width: 50%;
+    position: absolute;
+    top:3%; left:3%;
+}
+
+.container{
+    font-size: 2.5rem;
+    margin-top: 100px;
+    text-align: center;
+}
+
+.header .log{
+    border-radius: 40px;
+    background-color: None;
+    border: 2px solid #FFFFFF;
+    width: 250px;
+    padding:3px; margin: 10px auto;
+    color: #FFFFFF;
+    position: absolute;
+    top:72%; left:50%;
+    transform: translate(-50%, -50%);
+}
+
+.header .ab{
+    border-radius: 40px;
+    background-color: None;
+    border: 2px solid #FFFFFF;
+    width: 250px;
+    padding:3px; margin: 10px auto;
+    color: #FFFFFF;
+    position: absolute;
+    top:80%; left:50%;
+    transform: translate(-50%, -50%);
+}

@@ -1,0 +1,182 @@
+{% load static %}
+<html>
+    <head>
+        <title>COSMIC [class recommender system] 들었던 수업</title>
+        <LINK HREF="{% static 'main/css/PreLecVer2.css'%}" rel="stylesheet" />
+        <script src="{% static 'main/js/PreLecVer2.js '%}" ></script>
+        <script src="{% static 'main/js/jquery-3.5.1.min.js'%}"></script>
+        <script src="{% static 'main/js/jquery.csrf.js'%}"></script>
+    </head>
+    <body>
+        <div class="all"> 
+            <div class="menu_bar">
+                <div class="profile">
+                    <div class="profile_logo">
+                        <img src="{% static 'main/img/main_logo.png' %}" width="40px" height='40px' >
+                    </div>
+                    <div class="profile_name">
+                        <span style="font-size: 15px; font-weight: bold; ">{{ user.username }}</span><br>
+                        <span style="font-size: 10px; font-weight: bold; opacity: 50; ">{{ user.user_number }}</span>
+                    </div>
+                </div>
+        
+                <ul class="menu_list" >
+                    <li class="menu_button_thisPage" >
+                        <A href="{% url 'main:pre_lec_ver2' %}" >
+                            <img src="{% static 'main/img/들었던강의.png' %}" width="200" height='40' >
+                        </A>
+                    </li>
+                    <li class="menu_button">
+                        <A href="{% url 'main:class_rec_ver2' %}"  >
+                            <img src="{% static 'main/img/recommender.png' %}" width="200" height='40' >
+                        </A>
+                    </li>
+                    <li class="menu_button">
+                        <A href="{% url 'main:my_class_ver2' %}" >
+                            <img src="{% static 'main/img/my_class.png' %}" width="200" height='40' >
+                        </A>
+                    </li>   
+                </ul>
+        
+            </div>
+
+            <div class="container" >
+                <div class="page_title">
+                    <span style="font-size: 50px; font-weight: 900; ">들었던 강의</span>
+                </div>
+                <div class="content_container">
+                    {% csrf_token %}
+                    <div class="setting_container">
+                        <div class="setting_title">
+                            <span id='subject'style="font-size: 20px; font-weight: bold; "> 강의 평가</span>
+                        </div>
+                        <div class="score_window">
+                            <span style="font-size: 15px; font-weight: bold; ">학점</span>
+                            <br>
+                            <select class="score_select">      
+                                <option value='4.5'>A+</option>
+                                <option value='4.0'>A0</option>
+                                <option value='3.5'>B+</option>
+                                <option value='3.0'>B0</option>
+                                <option value='2.5'>C+</option>
+                                <option value='2.0'>C0</option>
+                                <option value='1.5'>D+</option>
+                                <option value='1.0'>D0</option>
+                                <option value='0'>F</option>
+                                <option value='4.5'>PASS</option>
+                                <option value='0'>FAIL</option>
+                            </select>
+                            <br>
+                        </div>
+                        <div class="satisfaction_window">
+                            <span style="font-size: 15px; font-weight: bold; ">만족도</span>
+                                <br><input type="range" id="good"  min="0" max="100" step="5" value="50"><br>   
+                        </div>
+                        <div class="keyword_window">
+                            <span style="font-size: 15px; font-weight: bold; ">이 수업의 키워드</span><br>
+                            <span style="font-size: 15px; font-weight: bold; opacity: 0.5; ">selected</span>
+                            <div class="selected_keyword_window">
+                                
+                            </div>
+                            <span style="font-size: 15px; font-weight: bold; opacity: 0.5; ">Unselected</span>
+                            <div class="unselected_keyword_window">
+                                {% for keyword in keyword_list %}
+                                    <div id='unselected_keyword' class="unselected_keyword_button">{{keyword.keyword}}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="save_setting_button_window">
+                            <div class="save_setting_button"> 
+                                <span style="font-size: 15px; font-weight: bold; ">SAVE</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search_container">
+                        <div class="search_window">
+                            <div class="search_title">
+                                <span style="font-size: 30px; font-weight: bold; ">Search</span>
+                            </div>
+                            <form action="" method="get" id="searchForm" name="search">
+                                <div class="classTypeFrame">
+                                    <input type="text" class="classNameSearch" name="q" size="50" value='{{search}}' placeholder="type class name here"> 
+                                    <button class="searchBt" type="submit" > 
+                                        <img src="{% static 'main/img/searchbtn.png'%}" width="12" height="12">
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        {% for subject in subject_list %}
+                            <div class="class_window" id='{{ subject.subj_name }}' name='{{ subject.prof_name }}' value='{{ subject.subj_id }}'>
+                                <div class="class_name_window">
+                                    <span id='subject_name' style="font-size: 2.25rem; font-weight: bold; ">{{ subject.subj_name }} </span><br>
+                                    <span style="font-size: 2rem; font-weight: bold; ">{{ subject.prof_name }}</span><br>
+                                </div>        
+                            </div>
+                        {% endfor %}
+                      
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        $(document).on("click", ".class_window", function () {
+            var subject_name = $(this).children('.class_name_window').children('#subject_name').text().trim();
+            var subject_id = $(this).attr('value');
+            console.log(subject_name);
+            console.log(subject_id);
+            $('#subject').text('"' + subject_name + '"' + ' 평가');
+            $('#subject').attr('value', subject_name);
+            $('#subject').attr('name', subject_id);
+        });
+    });
+
+    $(document).ready(function () {
+        $(document).on("click", "#unselected_keyword", function () {
+            var keyword = $(this).text();
+            $(this).fadeOut();
+            $('.selected_keyword_window').append("<div id='selected_keyword' class='selected_keyword_button'>" + keyword + "</div>" );
+        });
+    });
+
+    $(document).ready(function () {
+        $(document).on("click", "#selected_keyword", function () {
+            var keyword = $(this).detach();
+            $('.unselected_keyword_window').append("<div id='unselected_keyword' class='unselected_keyword_button'>" + keyword.text() + "</div>" );
+        });
+    });
+
+    $(document).ready(function () {
+        $(document).on("click", ".save_setting_button_window", function () {
+            var pre_lec = {};
+            pre_lec['search'] = $('.classNameSearch').val();
+            pre_lec['subject'] = $('#subject').attr('name');
+            console.log(pre_lec['subject']);
+            pre_lec['rating'] = $(".score_select> option:selected").attr('value');
+            pre_lec['good'] = $('#good').val();
+            var keyword_list = [];
+            var keywords = $('.selected_keyword_window').children('#selected_keyword');
+            for(var i=0;i<keywords.length;i++){
+                keyword_list = keyword_list.concat(keywords[i].textContent);
+            }
+            pre_lec['keyword_list'] = keyword_list;
+            $.ajax({
+                url:"{% url 'main:pre_lec_ver2' %}",
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(pre_lec),
+                dataType:'text',
+                success:function(result){
+                    alert("success!");
+                    location.reload();
+                }
+            })
+        });
+    });
+
+
+</script>

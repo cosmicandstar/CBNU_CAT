@@ -1,0 +1,254 @@
+@charset “utf-8”;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800;900&display=swap');
+
+body {
+    font: 14px/1.8 Arial, Helvatica, sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    background: #f1f0f7;
+    margin: 0px;
+}
+.topbar{
+    height: 60px;
+    width: 100%;
+    background:  #5007ef;
+    color: #fff;
+    float: left;
+    margin: 0px;
+    position: fixed;
+    box-shadow: 0px 0px 3px 0px gray;    
+}
+
+.frame {
+    float: left;
+}
+
+.nav {
+    float: left;
+    width: 60px;
+    background:  #fff;
+    color: #333;
+    height: 100%;
+    position: fixed;
+    margin-top: 60px;
+    box-shadow: 0px 0px 3px 0px gray;
+    text-align: center;
+}
+.button1 {
+    display: block;
+    text-decoration: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #eee;
+}
+.button3 {
+    display: block;
+    text-decoration: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #eee;
+}
+.button2 {
+    display: block;
+    text-decoration: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #eee;
+    background: #dfdcf0;
+}
+.button:hover {
+    background: #c3b9ff;
+    color: #333;
+}
+.container{
+    background: #f1f0f7;
+    color: #333;
+    margin-left: 110px;
+    overflow: hidden;
+    margin-top: 70px;
+    display: block;
+}
+.classTypeFrame{
+    display: flex;
+    float: left;
+    justify-content: space-between;
+    width: 1220px;
+    padding: 10px 10px;
+    margin: 20px;
+    box-shadow: 0px 0px 3px 0px gray;
+    color: #000000;
+    background: #ffffff;
+}
+.classTypeSelect2, .classTypeSelect1 , .classNameSearch{
+    height: 20px;
+    display: block;
+    margin-top: 15px;
+}
+.searchBt{
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    padding: 4px;
+    cursor: pointer;
+    outline: none;
+    color: rgb(43, 43, 43);
+    vertical-align:middle;
+}
+.searchBt:hover{
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background: #b9c9ff;
+}
+.classlist {
+    margin: 10px;
+}
+.class1 {
+    display: flex;
+    justify-content: space-between;
+    width: 1220px;
+    padding: 10px 10px;
+    margin: 10px;
+    box-shadow: 0px 0px 3px 0px gray;
+    background: #ffffff;
+}
+.class1 .classinfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.class1 .classinfo .professor{
+    font-size: 20px;
+    text-align: left;
+    margin-top: 0px;
+}
+.class1 .classinfo .name{
+    font-size: 30px;
+    font-weight: bold;
+}
+.class1 .classinfo .morebt{
+    font-size: 15px;
+    font-weight: normal;
+    color: rgb(92, 92, 92);
+    border: none;
+    width: 50px;
+    background-color: #fff;
+}
+.class1 .classinfo .morebt:hover{
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background: #c3b9ff;
+}
+
+.buttons{
+
+}
+.class1 .plusbt, .class1 .minusbt{
+    border: none;
+    border-radius: 50%;
+    padding: 4px;
+    margin: 5px;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+}
+.class1 .plusbt:hover, .minusbt:hover{
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background: #c3b9ff;
+}
+ul{
+    list-style: none;
+}
+td{
+    margin-right: 90px;
+}
+.mykword {
+    display: inline-block;
+    border-radius: 15px;
+    margin-left: 3px;
+    margin-top: 5px;
+    padding: 5px 10px 5px 10px;
+    color: #ffffff;
+    background: #ae89fd;
+    font-size: 14px;
+    font-weight: bold;
+}
+.moreinfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.moreinfoShow {
+
+}
+.midEx{
+    text-align: center;
+
+    height: 20px;
+    background-color: #8c1ead;
+    color: #ffffff;
+}
+.finalEx{
+    text-align: center;
+
+    height: 20px;
+    background-color: #5c1272;
+    color: #ffffff;
+}
+.attend{
+    text-align: center;
+
+    height: 20px;
+    background-color: #440557;
+    color: #ffffff;
+}
+.infoTable , .scoreRatio{
+    margin-right: 50px;
+    margin-left: 50px;
+    margin-top: 10px;
+}
+
+.classAddSetting {
+    padding: 20px;
+    width: 400px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #440557;
+}
+
+select{
+    width: 50px;
+    border: 1px solid #999;
+    color: #000000;
+    font-family: inherit;
+    background: url('arrow.jpg') no-repeat 95% 50%;
+    border-radius: 0px;
+    background-color: #ffffff;
+    opacity: 0.5;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    vertical-align:middle;
+}
+
+select:hover{
+    opacity: 0.8;
+}
+
+input[type="text"]{
+    width: 20em; /* 원하는 너비 설정 */
+    line-height : normal; /* line-height 초기화 */
+    margin: 0px 10px 0px 20px;
+    padding: .2em .5em; /* 원하는 여백 설정, 상하단 여백으로 높이를 조절 */
+    font-family: inherit; /* 폰트 상속 */
+    border: 1px solid #999;
+    border-radius: 0; /* iSO 둥근모서리 제거 */
+    outline-style: none; /* 포커스시 발생하는 효과 제거를 원한다면 */
+    -webkit-appearance: none; /* 브라우저별 기본 스타일링 제거 */
+    -moz-appearance: none;
+    appearance: none;
+    vertical-align:middle;
+}

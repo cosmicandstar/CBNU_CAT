@@ -1,0 +1,164 @@
+<html>
+    {% load static %}
+    <head>
+        <title> C.A.T. - CLASS RECOMMANDATION </title>
+        <LINK HREF="{% static 'main/css/classRec.css' %}" rel="stylesheet" />
+        <script src="{% static 'main/js/classRec.js' %}" ></script>
+    </head>
+    <body>
+        {% include './header.html' %}
+        <div class="frame">
+            {% include './nav.html' %}
+            <div class="container">
+                <div style="font-size: 30px; font-weight: bold; vertical-align:middle;">CLASS RECOMMENDATION</div><br>
+                <div class="classTypeFrame">
+                    <span style="font-size: 30px; font-weight: bold; vertical-align:middle;">Class Search</span><br>
+                    <form action="" method="get" id="searchForm" name="search">
+                    <select id="menu6" name="menu4" class="classTypeSelect2" form="searchForm" size="1" style="min-width: 90px; display:inline-block;" >
+                        <option value="0" {% if get.menu4 == '0' %} selected {% endif %} >가나다순</option>
+                        <option value="1" {% if get.menu4 == '1' %} selected {% endif %} >추천순</option>
+                        <option value="2" {% if get.menu4 == '2' %} selected {% endif %} >강의 키워드 유사도순</option>
+                        <option value="3" {% if get.menu4 == '3' %} selected {% endif %} >선택 키워드순</option>
+                    </select>
+                    <select name="menu" class="classTypeSelect1" form="searchForm" size="1" onChange="changeClassType()" style="min-width: 90px; display:inline-block;">
+                        <option value="0" {% if get.menu == '0' %} selected {% endif %} >전체</option>
+                        <option value="1" {% if get.menu == '1' %} selected {% endif %} >일반교양</option>
+                        <option value="2" {% if get.menu == '2' %} selected {% endif %} >확대교양</option>
+                        <option value="3" {% if get.menu == '3' %} selected {% endif %} >심화교양</option>
+                    </select>
+                    <select id="menu2" name="menu0" class="classTypeSelect2" form="searchForm" size="1" style="min-width: 90px; display:inline-block;">
+                        <option value="0" {% if get.menu == '0' and get.menu0 == '0' %} selected {% endif %} >전체</option>
+                    </select>
+                    <select id="menu3" name="menu1" class="classTypeSelect2" form="searchForm" size="1" style="min-width: 90px; display: none;" >
+                        <option value="0" {% if get.menu == '1' and get.menu1 == '0' %} selected {% endif %} >전체</option>
+                        <option value="1" {% if get.menu == '1' and get.menu1 == '1' %} selected {% endif %} >인간과 문화</option>
+                        <option value="2" {% if get.menu == '1' and get.menu1 == '2' %} selected {% endif %} >사회와 역사</option>
+                        <option value="3" {% if get.menu == '1' and get.menu1 == '3' %} selected {% endif %} >자연과 과학</option>
+                    </select>
+                    <select id="menu4" name="menu2" class="classTypeSelect2" form="searchForm" size="1" style="min-width: 90px; display: none;" >
+                        <option value="0" {% if get.menu == '2' and get.menu2 == '0' %} selected {% endif %} >전체</option>
+                        <option value="1" {% if get.menu == '2' and get.menu2 == '1' %} selected {% endif %} >미래융복합</option>
+                        <option value="2" {% if get.menu == '2' and get.menu2 == '2' %} selected {% endif %} >국제화</option>
+                        <option value="3" {% if get.menu == '2' and get.menu2 == '3' %} selected {% endif %} >진로와 취업</option>
+                        <option value="4" {% if get.menu == '2' and get.menu2 == '4' %} selected {% endif %} >예술과 체육</option>
+                    </select>
+                    <select id="menu5" name="menu3" class="classTypeSelect2" form="searchForm" size="1" style="min-width: 90px; display: none;" >
+                        <option value="0" {% if get.menu == '3' and get.menu3 == '0' %} selected {% endif %} >전체</option>
+                        <option value="1" {% if get.menu == '3' and get.menu3 == '1' %} selected {% endif %} >문학과 문화</option>
+                        <option value="2" {% if get.menu == '3' and get.menu3 == '2' %} selected {% endif %} >역사와 철학</option>
+                        <option value="3" {% if get.menu == '3' and get.menu3 == '3' %} selected {% endif %} >자연과 생명</option>
+                        <option value="4" {% if get.menu == '3' and get.menu3 == '4' %} selected {% endif %} >기술과 문명</option>
+                        <option value="5" {% if get.menu == '3' and get.menu3 == '5' %} selected {% endif %} >예술과 체육</option>
+                    </select>
+
+                        <input style="display:inline-block; margin-top: 10px" type="text" class="classNameSearch" name="keyword" size="20" placeholder="type class name here"
+                        {% if get.keyword != "" %}
+                            value="{{ get.keyword }}"
+                        {% endif %}
+                        >
+                        <button style="display:inline-block;" class="searchBt" onclick="document.forms['search'].submit();"> <img src="{% static 'main/img/searchbtn.png' %}" width="14" height="14"> </button>
+                    </form>
+                </div>
+                <div class="classlist">
+                    {% for subject in page_obj %}
+                        <li class="class1">
+                            <div class="classinfo">
+                                <span class="name"> {{ subject.subj_name }} </span>
+                                <p class="professor">담당교수 {{ subject.prof_name }}</p>
+                                <div class="moreinfoShow" id="moreinfo_{{ subject.subj_id }}" style="display: none;">
+                                    <div class="moreinfo">
+                                        <div class="infoTable" >
+                                            <br>
+                                            <table width ="300" height="30">
+                                                <tr>
+                                                    <td>강의시간</td>
+                                                    <td>{{ subject.time }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>강의실</td>
+                                                    <td>{{ subject.room }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="scoreRatio" >
+                                            <span style="font-size: 17px; font-weight: bold;"> 평가방법 </span>
+                                            <table width ="400" height="10">
+                                                <tr>
+                                                    <td>중간고사</td>
+                                                    <td>
+                                                        <div class="midEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>기말고사</td>
+                                                    <td>
+                                                        <div class="finalEx" style="width: calc(500px * 0.4);"> 40%</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>출석</td>
+                                                    <td>
+                                                        <div class="attend" style="width: calc(500px * 0.2);"> 20%</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="mykeywordDiv" display="inline">
+                                    {% for keyword in subject.keywords %}
+                                        <div class="mykword">{{ keyword.keyword }}</div>
+                                    {% endfor %}
+                                </div>
+                                <br>
+                                <button class="morebt" onclick="moreshow({{ subject.subj_id }})">more</button>
+
+                            </div>
+                            <form id="classAddSetting_{{ subject.subj_id }}" action="./subject/{{ subject.subj_id }}" method="get" class="classAddSetting" style="display: none;">
+                                <span>만족도</span>
+                                <input type="range" name="good">
+                                <br>
+                                <span>학점</span>
+                                <input type="text" name="grade">
+                                <input type="radio" name="gradeP" value="P">Pass
+                                <input type="radio" name="gradeF" value="F">Fail
+                                <br>
+                                <span>keyword</span><br>
+                                {% for keyword in keywords %}
+                                    <input type="radio" value="">{{ keyword.keyword }}
+                                {% endfor %}
+                                <input type="submit" name="저장">
+                            </form>
+                            <div class="buttons">
+                                <button class="plusbt" onclick="classAdd({{ subject.subj_id }})">
+                                    <IMG SRC="{% static 'main/img/plus.png' %}"  width="15" height="15">
+                                </button>
+                                <button class="plusbt">
+                                    <a href="./wish/{{ subject.subj_id }}"><IMG SRC="{% static 'main/img/heart.png' %}"  width="15" height="15"></a>
+                                </button>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </div>
+                <div class="pagination" style="margin-left:40%;">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1&menu4={{ get.menu4 }}&menu={{ get.menu }}&menu0={{ get.menu0 }}&menu1={{ get.menu1 }}&menu2={{ get.menu2 }}&menu3={{ get.menu3 }}&keyword={{ get.keyword }}">&laquo; first</a>
+                            <a href="?page={{ page_obj.previous_page_number }}&menu4={{ get.menu4 }}&menu={{ get.menu }}&menu0={{ get.menu0 }}&menu1={{ get.menu1 }}&menu2={{ get.menu2 }}&menu3={{ get.menu3 }}&keyword={{ get.keyword }}">previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </span>
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}&menu4={{ get.menu4 }}&menu={{ get.menu }}&menu0={{ get.menu0 }}&menu1={{ get.menu1 }}&menu2={{ get.menu2 }}&menu3={{ get.menu3 }}&keyword={{ get.keyword }}">next</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}&menu4={{ get.menu4 }}&menu={{ get.menu }}&menu0={{ get.menu0 }}&menu1={{ get.menu1 }}&menu2={{ get.menu2 }}&menu3={{ get.menu3 }}&keyword={{ get.keyword }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

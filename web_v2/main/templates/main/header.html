@@ -1,0 +1,9 @@
+{% load static %}
+<div class="topbar">
+    <div  style="position: absolute; left: 8px; top: 8px;"><IMG SRC="{% static 'main/img/logo2.png' %}"  width="40" height="40"></div>
+    <div  style="font-size: 30px; position: absolute; left: 80px; top: 4px;"><B>CA+</B></div>
+    <div  style="font-size: px;  text-align: right; margin: 15px">
+        <B style="font-weight: 500; margin-bottom: 0.5em;">{{ user.user_number }} </B> <B>{{ user.username }}</B>
+        <a href="../logout" style="text-decoration-color: #5007ef; color: #b59de9;"><B style="margin-left: 20px;">log out</B></a>
+    </div>
+</div>

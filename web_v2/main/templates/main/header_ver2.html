@@ -1,0 +1,33 @@
+
+{% load static %}
+<div class="all"> 
+    <div class="menu_bar">
+        <div class="profile">
+            <div class="profile_logo">
+                <img src="{% static 'main/img/main_logo.png' %}" width="40px" height='40px' >
+            </div>
+            <div class="profile_name">
+                <span style="font-size: 15px; font-weight: bold; ">{{ user.username }}</span><br>
+                <span style="font-size: 10px; font-weight: bold; opacity: 50; ">{{ user.user_number }}</span>
+            </div>
+        </div>
+
+        <ul class="menu_list" >
+            <li class="menu_button" >
+                <A href="{% url 'main:pre_lec_ver2' %}" >
+                    <img src="{% static 'main/img/들었던강의.png' %}" width="200" height='40' >
+                </A>
+            </li>
+            <li class="menu_button_thisPage">
+                <A href="{% url 'main:class_rec_ver2' %}"  >
+                    <img src="{% static 'main/img/recommender.png' %}" width="200" height='40' >
+                </A>
+            </li>
+            <li class="menu_button">
+                <A href="{% url 'main:my_class_ver2' %}" >
+                    <img src="{% static 'main/img/my_class.png' %}" width="200" height='40' >
+                </A>
+            </li>   
+        </ul>
+
+    </div>

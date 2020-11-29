@@ -1,0 +1,67 @@
+<html>
+    {% load static %}
+    <head>
+        <title> C.A.T. - MY INFO </title>
+        <LINK HREF="{% static 'main/css/myInfo.css' %}" rel="stylesheet" />
+        <script src="{% static 'main/js/myInfo.js' %}" ></script>
+
+    </head>
+    <body>
+        {% include './header.html' %}
+        <div class="frame">
+            {% include './nav.html' %}
+            <div class="container">
+                <span style="font-size: 30px; font-weight: bold;">MY INFO</span>
+                <div class="container_2">
+                    <div class="mbtiframe" id="mbtiframeRed">
+                        <span style="font-size: 30px; font-weight: bold; ">MBTI TYPE</span><br>
+                        <select name='mbti' class="mbtiSelect" onchange="changeMbti(false)">
+                            <option value='INTJ'>INTJ</option>
+                            <option value='INTP'>INTP</option>
+                            <option value='INFJ'>INFJ</option>
+                            <option value='INFP'>INFP</option>
+                            <option value='ISTJ'>ISTJ</option>
+                            <option value='ISTP'>ISTP</option>
+                            <option value='ISFJ'>ISFJ</option>
+                            <option value='ISFP'>ISFP</option>
+                            <option value='ENTJ'>ENTJ</option>
+                            <option value='ENTP'>ENTP</option>
+                            <option value='ENFJ'>ENFJ</option>
+                            <option value='ENFP'>ENFP</option>
+                            <option value='ESTJ'>ESTJ</option>
+                            <option value='ESTP'>ESTP</option>
+                            <option value='ESFJ'>ESFJ</option>
+                            <option value='ESFP'>ESFP</option>
+                        </select>
+                        <br>
+                        <form id="mbti_form" action="./mbti" method="post"> {% csrf_token %}
+                            <input type="hidden" class="hidden_mymbti" id="hidden_mymbti" name="hidden_mymbti" value="{{ user.mbti }}">
+                            <div class="mymbti" style="font-size: 50px; font-weight: bold; position: relative; text-align: center;">{{ user.mbti }}</div>
+                        </form>
+                    </div>
+                    <div class="keywordframe">
+                        <span style="font-size: 30px; font-weight: bold;"> MY KEYWORD</span><br>
+                        <div clss="keyword">
+                            {% for keyword in user_keywords %}
+                                {% if keyword.flag == 1 %}
+                                    <a href="./-keyword/{{ keyword.keyword_id }}" class="mykword" style="text-decoration: none;">{{ keyword.keyword }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="add-keyword">
+                    <span style="font-size: 30px; font-weight: bold; margin-top: 100px; vertical-align:middle;">ADD KEYWORD</span>
+                    <input type="text" name="keyword" size="15" placeholder="type keyword here">
+                    <button class="searchbt"><img src="{% static 'main/img/searchbtn.png' %}" width="15" height="15"></button><br>
+                        <br>
+                        {% for keyword in user_keywords %}
+                            {% if keyword.flag == 0 %}
+                                <a href="./keyword/{{ keyword.keyword_id }}" class="kwordInSearch" style="text-decoration: none;">{{ keyword.keyword }}</a>
+                            {% endif %}
+                        {% endfor %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

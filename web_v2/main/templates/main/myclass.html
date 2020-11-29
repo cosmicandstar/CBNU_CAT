@@ -1,0 +1,148 @@
+<html>
+    {% load static %}
+    <head>
+        <title> C.A.T. - MyClass </title>
+        <LINK HREF="{% static 'main/css/MyClass.css' %}" rel="stylesheet" />
+        <script src="{% static 'main/js/myclass.js' %}" ></script>
+    </head>
+    <body>
+        {% include './header.html' %}
+        <div class="frame">
+            {% include './nav.html' %}
+            <div class="container">    
+                <span style="font-size: 30px; font-weight: bold;">MY Class</span>
+                <div class="container-2">
+                    <div class="classtype" style="display: inline-block; width:30%;">
+                        <div style="font-size: 30px; font-weight: bold;" >내 이전 강의</div>
+                            <div class="classlist">
+                                {% for subj in usersubjlist %}
+                                    <div class="class1">
+                                        <div class="classinfo">
+                                            <p class="name">{{ subj.subj_name }}</p>
+                                            <p class="professor">담당교수 {{ subj.prof_name }}</p>
+                                            <table width =150" height="30">
+                                                        <tr>
+                                                            <td>학점</td>
+                                                            <td>{{ subj.rating }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>만족도</td>
+                                                            <td>{{ subj.good }}</td>
+                                                        </tr>
+                                                    </table>
+                                            <br>
+                                            <div class="mykeywordDiv" display="inline">
+                                                {% for keyword in subj.keywords %}
+                                                    <div class="mykword">{{ keyword.keyword }}</div>
+                                                {% endfor %}
+                                                <br>
+                                                <br>
+                                            </div>
+                                            <form id="classReSetting_{{ subj.subj_id }}" action="./subject_/{{ subj.subj_id }}" method="get" class="classAddSetting" style="display: none;">
+                                                <span>만족도</span>
+                                                <input type="range" name="good" value={{ subj.good }}>
+                                                <br>
+                                                <span>학점</span>
+                                                <input type="text" name="grade" value="{{ subj.rating }}">
+                                                <input type="radio" name="gradeP" value="P">Pass
+                                                <input type="radio" name="gradeF" value="F">Fail
+                                                <br>
+                                                <span>keyword</span><br>
+                                                <input type="radio" value=""> 조별과제
+                                                <input type="radio" value=""> 이론 중심 수업
+                                                <input type="radio" value=""> 매주 리포트
+                                                <br>
+                                                <input type="radio" value=""> 필기 중요
+                                                <input type="radio" value=""> 중간 고사X
+                                                <input type="radio" value=""> P/F
+                                                <input type="radio" value=""> + 많음
+                                                <br>
+                                                <input type="submit" name="저장">
+                                            </form>
+                                            <div>
+                                                <button class="minusbt">
+                                                    <a href="./-subject/{{ subj.subj_id }}"><IMG SRC="{% static 'main/img/minus.png' %}"  width="15" height="15"></a>
+                                                </button>
+                                                <button class="rebt" onclick="classReset({{ subj.subj_id }})">
+                                                    <IMG SRC="{% static 'main/img/pencil.png' %}"  width="15" height="15">
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                    </div>
+                    <div class="classtype" style="display: inline-block; width:50%;">
+                        <div style="font-size: 30px; font-weight: bold;"> 찜한 강의</div>
+                        <div class="classlist">
+                            {% for wish in wishlist %}
+                                <div class="class2">
+                                    <div class="classinfo">
+                                        <span class="name"> {{ wish.subj_name }} </span>
+                                        <div id="moreinfo_{{ wish.subj_id }}" class="moreinfoShow" style="display:none">
+                                            <div class="moreinfo">
+                                                <div class="infoTable" >
+                                                    <br>
+                                                    <table width ="300" height="30">
+                                                        <tr>
+                                                            <td>강의시간</td>
+                                                            <td>{{ wish.time }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>강의실</td>
+                                                            <td>{{ wish.room }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>담당교수</td>
+                                                            <td>{{ wish.prof_name }}</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="scoreRatio" >
+                                                    <span style="font-size: 17px; font-weight: bold;"> 평가방법 </span>
+                                                    <table width ="400" height="10">
+                                                        <tr>
+                                                            <td>중간고사</td>
+                                                            <td>
+                                                                <div class="midEx"> 40%</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>기말고사</td>
+                                                            <td>
+                                                                <div class="finalEx"> 40%</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>출석</td>
+                                                            <td>
+                                                                <div class="attend"> 20%</div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="mykeywordDiv" display="inline">
+                                            {% for keyword in wish.keywords %}
+                                                <div class="mykword">{{ keyword.keyword }}</div>
+                                            {% endfor %}
+                                        </div>
+                                        <br>
+                                        <div>
+                                        <button class="morebt" onclick="moreshow({{ wish.subj_id }})">more</button>
+                                        <button class="minusbt">
+                                            <a href="./-wish/{{ wish.subj_id }}"><IMG SRC="{% static 'main/img/minus.png' %}"  width="15" height="15"></a>
+                                        </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

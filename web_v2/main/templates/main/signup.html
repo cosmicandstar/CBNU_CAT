@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <script>
+        function submit_click(){
+            var pw = document.getElementById('pw').value
+            var pw_check = document.getElementById('pw_check').value
+            if (pw == pw_check) {
+                document.getElementById('signup-form').submit();
+            } else {
+                alert("비밀번호가 일치하지 않습니다.")
+                document.getElementById('pw_check').focus()
+            }
+        }
+    </script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main/css/signup_style.css'%}">
+    <link href="fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+    <title>signup</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="signup_title">
+            Sign up
+        </div>
+        <img src="{% static 'main/img/cosmic_logo.png'%}">
+    </div>
+    <div class="signup_container">
+        <form action="../join/" method="POST" id="signup-form">{% csrf_token %}
+            <div>
+                <input type="text" id="id" name='id' placeholder="ID">
+            </div>
+            <div>
+                <input type="password" id='pw' name='pw' placeholder="PW">
+            </div>
+            <div>
+                <input type="password" id='pw_check' name='pw_check' placeholder="PW_CHECK">
+            </div>
+            <div>
+                <input type="text" id='name' name='name' placeholder="NAME">
+            </div>
+            <div>
+                <input type="text" id='student_number' name='student_number' placeholder="STUDENT NUMBER">
+            </div>
+                <button type='submit' id="btn_submit" onclick="submit_click();" value="Create Account">Create Account</button>
+        </form>
+    </div>
+    
+</body>
+</html>

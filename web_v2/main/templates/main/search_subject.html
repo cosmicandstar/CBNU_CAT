@@ -1,0 +1,53 @@
+<html>
+    {% load static %}
+    <head>
+        <title> C.A.T. - MyClass </title>
+        <LINK HREF="{% static 'main/css/MyClass.css' %}" rel="stylesheet" />
+        <script src="{% static 'main/js/myclass.js' %}" ></script>
+    </head>
+    <body>
+        {% include './header.html' %}
+        <div class="frame">
+            {% include './nav.html' %}
+            <div class="container"> 
+                <div class="classTypeFrame">
+                    <span style="font-size: 30px; font-weight: bold; vertical-align:middle;">Class Search</span><br>
+                    <form action="" method="get" id="searchForm" name="search">
+                        <input style="width: 348px; height: 21px;
+                        margin: 6px 0 0 9px;
+                        border: 0;
+                        line-height: 21px;
+                        font-weight: bold;
+                        font-size: 16px;
+                        outline: none;" type="text" class="classNameSearch" name="q" size="20" placeholder="type class name here">
+                        <button type="submit" style="display:inline-block;" > <img src="{% static 'main/img/searchbtn.png' %}" width="14" height="14"> </button>
+                    </form>
+                </div>
+                <div>
+                    {% for subject in subject_list %}
+                    <div class="classlist">
+                        <li class="class1">
+                            <div class="classinfo">
+                                <span class="name"> {{ subject.subj_name }} </span>
+                                <p class="professor">담당교수 {{ subject.prof_name }}</p>
+                                    <table width ="300" height="30">
+                                        <tr>
+                                            <td>강의시간</td>
+                                            <td>{{ subject.time }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>강의실</td>
+                                            <td>{{ subject.room }}</td>
+                                        </tr>
+                                    </table>
+                                <br>
+                            </div>
+                        </li>
+                    </div>
+                {% endfor %}
+                </div>
+                
+            </div>
+        </div>
+    </body>
+</html>

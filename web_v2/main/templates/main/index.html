@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COSMIC recommender system</title>
+    <link href="//fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'main/css/index.css'%}">
+</head>
+<body>
+    <div class="base">
+    <img src="{% static 'main/img/intro_background.png'%}" class="bg">
+    <img src="{% static 'main/img/intro_title.png'%}" class="tt">
+    </div>
+    <div class="container">
+        <div class="header">
+            <img src="{% static 'main/img/main.png'%}">
+            <a href="login" class="log">log-in</a>
+            <br><br><br>
+            <a href="about" class="ab">About</a>
+        </div>
+    </div>
+</body>
+</html>
