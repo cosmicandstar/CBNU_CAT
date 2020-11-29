@@ -208,7 +208,7 @@ def total_sim(like_data, wish_data, score_data, lecture_data, alpha):
         wish_in["rating"] = 1
         wish_wide = pre(wish_in)
         wish_sim = sim_bin(wish_wide, lecture_list)
-        ts += + wish_sim * alpha[2]
+        ts += wish_sim * alpha[2]
 
     """like_sim.to_csv("like_sim.csv")
     wish_sim.to_csv("wish_sim.csv")
@@ -390,16 +390,16 @@ def classrec(request):
                            lecture]  # if subjects_id.count(x[0]) > 0
 
                 alpha = [0.7, 0.4, 0.4, 0.1]
-
+                print(menu4+"야호랑이똥개")
                 if menu4 == 2:
-                    alpha.reverse()
+                    alpha = [0.0, 0.9, 0.0, 0.0]
 
                 ts, lecture_list = total_sim(goods, wish, ratings, lecture, alpha)
                 user = user_input(goods_single, lecture_list)
                 recommend_ = recommend(ts, user)
 
                 if menu4 == 3:
-                    # print("야호랑이똥개")
+                    print("야호랑이똥개")
                     # print(lecture)
                     user_keywords_wide = pd.DataFrame(user_keywords, columns=["keyword", "key"])
                     lecture_temp = pd.DataFrame(lecture, columns=["id", "keyword", "value"])
@@ -839,6 +839,7 @@ def class_rec_ver2(request):
 
                 ratings = list(UserSubject.objects.values_list('user_id', 'subj_id', 'rating'))
                 ratings = [list(x) for x in ratings]
+
                 goods_single = list(UserSubject.objects.filter(user_id=user.id).values_list('subj_id', 'good'))
                 goods_single = [list(x) for x in goods_single]
                 goods = list(UserSubject.objects.values_list('user_id', 'subj_id', 'good'))
@@ -850,17 +851,19 @@ def class_rec_ver2(request):
                 lecture = list(SubjectKeywords.objects.values_list('subj_id', 'keyword_id', 'value'))
                 lecture = [list((x[0], x[1], 1)) if x[2] > 1 else list(x) for x in
                            lecture]  # if subjects_id.count(x[0]) > 0
-
+                print(ratings)
+                print(goods)
                 # MF 모델
                 '''predict(15, 200, 0)
 
                 recommend_ = []'''
 
                 # 기존 모델
-                alpha = [0.7, 0.4, 0.4, 0.1]
+                alpha = [0.8, 0, 0, 0.2]
 
                 if menu4 == 2:
-                    alpha.reverse()
+                    print("유사 강의순")
+                    alpha = [0.2, 0, 0, 0.8]
                 ts, lecture_list = total_sim(goods, wish, ratings, lecture, alpha)
                 if menu4 == 3:
                     # print(lecture)
@@ -870,6 +873,7 @@ def class_rec_ver2(request):
                     recommend_ = keyword_sort(user_keywords_wide, pre_lec(lecture_temp))
                     print(recommend_)
                 else:
+                    print(alpha)
                     user = user_input(goods_single, lecture_list)
                     recommend_ = recommend(ts, user)
 
